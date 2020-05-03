@@ -133,6 +133,7 @@ class EditProfileView: UIViewController {
 			person.location	= location
 			person.phone = phone
 			person.syncRequired = true
+			person.updatedAt = Date().timestamp()
 		}
 	}
 

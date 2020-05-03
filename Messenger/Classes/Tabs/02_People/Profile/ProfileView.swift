@@ -98,8 +98,7 @@ class ProfileView: UIViewController {
 
 		if let path = MediaDownload.pathUser(person.objectId) {
 			if let image = UIImage.image(path, size: 320) {
-				let photoItems = PictureView.photos(picture: image)
-				let pictureView = PictureView(photos: photoItems)
+				let pictureView = PictureView(image: image)
 				present(pictureView, animated: true)
 			}
 		}

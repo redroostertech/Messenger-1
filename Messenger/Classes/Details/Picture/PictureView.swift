@@ -9,24 +9,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import ProgressHUD
 import NYTPhotoViewer
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class PictureView: NYTPhotosViewController {
 
-	private var isMessages = false
+	private var photoDataSource: NYTPhotoSource!
+	private var isShareButtonVisible = false
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func photos(picture: UIImage) -> [NYTPhoto] {
+	convenience init(image: UIImage, isShareButtonVisible: Bool = false) {
 
-		let photoItem = NYTPhotoItem()
-		photoItem.image = picture
-		return [photoItem]
+		let photoItem = NYTPhotoItem(image: image)
+		let dataSource = NYTPhotoSource(photoItems: [photoItem])
+		self.init(dataSource: dataSource, initialPhoto: nil, delegate: nil)
+
+		self.photoDataSource = dataSource
+		self.isShareButtonVisible = isShareButtonVisible
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func photos(messageId: String, chatId: String) -> (photoItems: [NYTPhoto], initialPhoto: NYTPhoto?) {
+	convenience init(chatId: String, messageId: String, isShareButtonVisible: Bool = true) {
 
 		var photoItems: [NYTPhotoItem] = []
 		var initialPhoto: NYTPhotoItem? = nil
@@ -59,13 +62,11 @@ class PictureView: NYTPhotosViewController {
 
 		if (initialPhoto == nil) { initialPhoto = photoItems.first }
 
-		return (photoItems: photoItems, initialPhoto: initialPhoto)
-	}
+		let dataSource = NYTPhotoSource(photoItems: photoItems)
+		self.init(dataSource: dataSource, initialPhoto: initialPhoto, delegate: nil)
 
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func setMessages(messages: Bool)
-	{
-		isMessages = messages
+		self.photoDataSource = dataSource
+		self.isShareButtonVisible = isShareButtonVisible
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -73,13 +74,11 @@ class PictureView: NYTPhotosViewController {
 
 		super.viewDidLoad()
 
-		if (isMessages) {
-			rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionMore))
+		if (isShareButtonVisible) {
+			rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionShare))
 		} else {
 			rightBarButtonItem = nil
 		}
-
-		updateOverlayViewConstraints()
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -94,67 +93,14 @@ class PictureView: NYTPhotosViewController {
 		return .lightContent
 	}
 
-	// MARK: - Initialization methods
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func updateOverlayViewConstraints() {
-
-		if let overlay = overlayView {
-			for constraint in overlay.constraints {
-				if (constraint.firstItem is UINavigationBar) {
-					if (constraint.firstAttribute == .top) {
-						constraint.constant = 25
-					}
-				}
-			}
-		}
-	}
-
 	// MARK: - User actions
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	@objc func actionMore() {
-
-		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-		alert.addAction(UIAlertAction(title: "Save", style: .default) { action in
-			self.actionSave()
-		})
-		alert.addAction(UIAlertAction(title: "Share", style: .default) { action in
-			self.actionShare()
-		})
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
-		present(alert, animated: true)
-	}
-
-	// MARK: - User actions (save)
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func actionSave() {
+	@objc func actionShare() {
 
 		if let photoItem = currentlyDisplayedPhoto as? NYTPhotoItem {
 			if let image = photoItem.image {
-				UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-			}
-		}
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	@objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeMutableRawPointer?) {
-
-		if (error != nil) {
-			ProgressHUD.showError("Saving failed.")
-		} else {
-			ProgressHUD.showSuccess("Successfully saved.")
-		}
-	}
-
-	// MARK: - User actions (share)
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func actionShare() {
-
-		if let photoItem = currentlyDisplayedPhoto as? NYTPhotoItem {
-			if let image = photoItem.image {
-				let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-				present(activity, animated: true)
+				let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+				present(activityViewController, animated: true)
 			}
 		}
 	}

@@ -28,6 +28,7 @@ class Member: SyncObject {
 		try! realm.safeWrite {
 			isActive = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 }

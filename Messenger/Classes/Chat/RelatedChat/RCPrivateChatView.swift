@@ -515,9 +515,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 
 		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
 			if (rcmessage.type == MESSAGE_PHOTO) {
-				let result = PictureView.photos(messageId: rcmessage.messageId, chatId: chatId)
-				let pictureView = PictureView(photos: result.photoItems, initialPhoto: result.initialPhoto)
-				pictureView.setMessages(messages: true)
+				let pictureView = PictureView(chatId: chatId, messageId: rcmessage.messageId)
 				present(pictureView, animated: true)
 			}
 			if (rcmessage.type == MESSAGE_VIDEO) {
@@ -543,8 +541,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 				}
 			}
 			if (rcmessage.type == MESSAGE_LOCATION) {
-				let location = CLLocation(latitude: rcmessage.latitude, longitude: rcmessage.longitude)
-				let mapView = MapView(location: location)
+				let mapView = MapView(latitude: rcmessage.latitude, longitude: rcmessage.longitude)
 				let navController = NavigationController(rootViewController: mapView)
 				present(navController, animated: true)
 			}

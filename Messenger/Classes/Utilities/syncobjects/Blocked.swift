@@ -28,6 +28,7 @@ class Blocked: SyncObject {
 		try! realm.safeWrite {
 			isDeleted = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 }

@@ -87,7 +87,7 @@ class LoginEmailView: UIViewController {
 	func loadPerson() {
 
 		let userId = AuthUser.userId()
-		DataFetcher.fetchPerson(userId) { error in
+		FireFetcher.fetchPerson(userId) { error in
 			if (error != nil) {
 				self.createPerson()
 			}

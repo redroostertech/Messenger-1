@@ -53,7 +53,6 @@ This is a native iOS Messenger app, with audio/video calls and realtime chat con
 - No backend programming is needed
 - Native and easy to customize user interface
 - Login with Email
-- Login with SMS
 - Sending text messages
 - Sending pictures
 - Sending videos

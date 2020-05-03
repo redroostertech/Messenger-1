@@ -57,6 +57,7 @@ class Message: SyncObject {
 		try! realm.safeWrite {
 			isMediaQueued = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -69,6 +70,7 @@ class Message: SyncObject {
 		try! realm.safeWrite {
 			isMediaFailed = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -81,6 +83,7 @@ class Message: SyncObject {
 		try! realm.safeWrite {
 			isDeleted = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 }

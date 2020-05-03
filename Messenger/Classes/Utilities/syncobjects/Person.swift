@@ -82,6 +82,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			pictureAt = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -94,6 +95,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			status = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -106,6 +108,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			keepMedia = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -118,6 +121,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			networkPhoto = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -130,6 +134,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			networkVideo = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -142,6 +147,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			networkAudio = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -154,6 +160,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			wallpaper = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -166,6 +173,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			oneSignalId = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -178,6 +186,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			lastActive = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -190,6 +199,7 @@ class Person: SyncObject {
 		try! realm.safeWrite {
 			lastTerminate = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 }

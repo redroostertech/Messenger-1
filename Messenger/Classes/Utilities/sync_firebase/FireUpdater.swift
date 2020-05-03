@@ -13,7 +13,7 @@ import FirebaseFirestore
 import RealmSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class DataUpdater: NSObject {
+class FireUpdater: NSObject {
 
 	private var collection: String = ""
 
@@ -57,8 +57,7 @@ class DataUpdater: NSObject {
 
 		updating = true
 
-		var values = populateObject(object)
-		values["updatedAt"] = Date().timestamp()
+		let values = populateObject(object)
 
 		if (object.neverSynced) {
 			Firestore.firestore().collection(collection).document(object.objectId).setData(values) { error in

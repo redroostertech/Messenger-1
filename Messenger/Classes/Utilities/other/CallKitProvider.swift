@@ -17,6 +17,7 @@ class CallKitProvider: NSObject {
 
 	private var client: SINClient!
 	private var cxprovider: CXProvider!
+	private var callController = CXCallController()
 
 	private var name = ""
 	private var calls: [UUID: SINCall] = [:]
@@ -106,8 +107,21 @@ class CallKitProvider: NSObject {
 	private func reportCallProgress(call: SINCall) {
 
 		guard let callUUID = UUID(uuidString: call.callId) else { return }
+		guard let name = call.headers["name"] as? String else { return }
 
-		cxprovider.reportOutgoingCall(with: callUUID, startedConnectingAt: Date())
+		let handle = CXHandle(type: .generic, value: name)
+		let startCallAction = CXStartCallAction(call: callUUID, handle: handle)
+
+		if let details = call.details {
+			startCallAction.isVideo = details.isVideoOffered
+		}
+
+		let transaction = CXTransaction(action: startCallAction)
+		callController.request(transaction) { error in
+			if let error = error {
+				print(error.localizedDescription)
+			}
+		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------

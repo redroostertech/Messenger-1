@@ -33,6 +33,7 @@ class Detail: SyncObject {
 		try! realm.safeWrite {
 			typing = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -45,6 +46,7 @@ class Detail: SyncObject {
 		try! realm.safeWrite {
 			lastRead = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -57,6 +59,7 @@ class Detail: SyncObject {
 		try! realm.safeWrite {
 			mutedUntil = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -69,6 +72,7 @@ class Detail: SyncObject {
 		try! realm.safeWrite {
 			isDeleted = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 
@@ -81,6 +85,7 @@ class Detail: SyncObject {
 		try! realm.safeWrite {
 			isArchived = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 }

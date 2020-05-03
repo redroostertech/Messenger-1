@@ -9,41 +9,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import RealmSwift
+import NYTPhotoViewer
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class Group: SyncObject {
+class NYTPhotoSource: NSObject, NYTPhotoViewerDataSource {
 
-	@objc dynamic var chatId = ""
-
-	@objc dynamic var name = ""
-	@objc dynamic var ownerId = ""
-
-	@objc dynamic var isDeleted = false
+	var photoItems: [NYTPhoto] = []
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(name value: String) {
+	convenience init(photoItems: [NYTPhoto]) {
 
-		if (name == value) { return }
-
-		let realm = try! Realm()
-		try! realm.safeWrite {
-			name = value
-			syncRequired = true
-			updatedAt = Date().timestamp()
-		}
+		self.init()
+		self.photoItems = photoItems
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(isDeleted value: Bool) {
+	var numberOfPhotos: NSNumber? {
 
-		if (isDeleted == value) { return }
+		return NSNumber(value: photoItems.count)
+	}
 
-		let realm = try! Realm()
-		try! realm.safeWrite {
-			isDeleted = value
-			syncRequired = true
-			updatedAt = Date().timestamp()
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	func index(of photo: NYTPhoto) -> Int {
+
+		if let photoItem = photo as? NYTPhotoItem {
+			if let index = photoItems.firstIndex(where: { $0.image == photoItem.image }) {
+				return index
+			}
 		}
+		return 0
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	func photo(at index: Int) -> NYTPhoto? {
+
+		if (photoItems.count > index) {
+			return photoItems[index]
+		}
+		return nil
 	}
 }

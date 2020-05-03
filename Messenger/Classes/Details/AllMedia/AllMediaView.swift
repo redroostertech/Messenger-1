@@ -72,9 +72,7 @@ class AllMediaView: UIViewController {
 	func presentPicture(message: Message) {
 
 		if (MediaDownload.pathPhoto(message.objectId) != nil) {
-			let result = PictureView.photos(messageId: message.objectId, chatId: chatId)
-			let pictureView = PictureView(photos: result.photoItems, initialPhoto: result.initialPhoto)
-			pictureView.setMessages(messages: true)
+			let pictureView = PictureView(chatId: chatId, messageId: message.objectId)
 			present(pictureView, animated: true)
 		}
 	}

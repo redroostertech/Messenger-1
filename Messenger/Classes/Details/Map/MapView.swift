@@ -27,6 +27,14 @@ class MapView: UIViewController {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
+	init(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+
+		super.init(nibName: nil, bundle: nil)
+
+		self.location = CLLocation(latitude: latitude, longitude: longitude)
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
 	required init?(coder aDecoder: NSCoder) {
 
 		super.init(coder: aDecoder)

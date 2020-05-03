@@ -12,7 +12,7 @@
 import FirebaseStorage
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class FileStorage: NSObject {
+class FireStorage: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func upload(data: Data, dir: String, name: String, ext: String, completion: @escaping (_ error: Error?) -> Void) {

@@ -12,21 +12,21 @@
 import Foundation
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class DataUpdaters: NSObject {
+class FireUpdaters: NSObject {
 
-	private var updaterPerson:	DataUpdater?
-	private var updaterFriend:	DataUpdater?
-	private var updaterBlocked:	DataUpdater?
-	private var updaterMember:	DataUpdater?
+	private var updaterPerson:	FireUpdater?
+	private var updaterFriend:	FireUpdater?
+	private var updaterBlocked:	FireUpdater?
+	private var updaterMember:	FireUpdater?
 
-	private var updaterGroup:	DataUpdater?
-	private var updaterSingle:	DataUpdater?
-	private var updaterDetail:	DataUpdater?
-	private var updaterMessage:	DataUpdater?
+	private var updaterGroup:	FireUpdater?
+	private var updaterSingle:	FireUpdater?
+	private var updaterDetail:	FireUpdater?
+	private var updaterMessage:	FireUpdater?
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	static let shared: DataUpdaters = {
-		let instance = DataUpdaters()
+	static let shared: FireUpdaters = {
+		let instance = FireUpdaters()
 		return instance
 	} ()
 
@@ -35,14 +35,14 @@ class DataUpdaters: NSObject {
 
 		super.init()
 
-		updaterPerson	= DataUpdater(name: "Person", type: Person.self)
-		updaterFriend	= DataUpdater(name: "Friend", type: Friend.self)
-		updaterBlocked	= DataUpdater(name: "Blocked", type: Blocked.self)
-		updaterMember	= DataUpdater(name: "Member", type: Member.self)
+		updaterPerson	= FireUpdater(name: "Person", type: Person.self)
+		updaterFriend	= FireUpdater(name: "Friend", type: Friend.self)
+		updaterBlocked	= FireUpdater(name: "Blocked", type: Blocked.self)
+		updaterMember	= FireUpdater(name: "Member", type: Member.self)
 
-		updaterGroup	= DataUpdater(name: "Group", type: Group.self)
-		updaterSingle	= DataUpdater(name: "Single", type: Single.self)
-		updaterDetail	= DataUpdater(name: "Detail", type: Detail.self)
-		updaterMessage	= DataUpdater(name: "Message", type: Message.self)
+		updaterGroup	= FireUpdater(name: "Group", type: Group.self)
+		updaterSingle	= FireUpdater(name: "Single", type: Single.self)
+		updaterDetail	= FireUpdater(name: "Detail", type: Detail.self)
+		updaterMessage	= FireUpdater(name: "Message", type: Message.self)
 	}
 }

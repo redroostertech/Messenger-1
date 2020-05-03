@@ -13,14 +13,14 @@ import FirebaseFirestore
 import RealmSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class DataFetcher: NSObject {
+class FireFetcher: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func fetchPerson(_ objectId: String, completion: @escaping (_ error: Error?) -> Void) {
 
 		let query = Firestore.firestore().collection("Person")
 			.whereField("objectId", isEqualTo: objectId)
-		DataFetch.perform(query, to: Person.self) { count, error in
+		FireFetch.perform(query, to: Person.self) { count, error in
 			if (error == nil) {
 				if (count != 0) {
 					completion(nil)

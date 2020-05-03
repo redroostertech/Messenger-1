@@ -615,9 +615,7 @@ extension MKGroupChatView: MessageCellDelegate {
 					MKPhotoLoader.manual(mkmessage, in: messagesCollectionView)
 				}
 				if (mkmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
-					let result = PictureView.photos(messageId: mkmessage.messageId, chatId: chatId)
-					let pictureView = PictureView(photos: result.photoItems, initialPhoto: result.initialPhoto)
-					pictureView.setMessages(messages: true)
+					let pictureView = PictureView(chatId: chatId, messageId: mkmessage.messageId)
 					present(pictureView, animated: true)
 				}
 			}

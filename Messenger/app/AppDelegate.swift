@@ -11,8 +11,6 @@
 
 import UIKit
 import CoreSpotlight
-import Firebase
-import FirebaseAuth
 import OneSignal
 import RealmSwift
 import Sinch
@@ -41,10 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 
 		//-----------------------------------------------------------------------------------------------------------------------------------------
-		// Firebase initialization
+		// SyncEngine initialization
 		//-----------------------------------------------------------------------------------------------------------------------------------------
-		FirebaseApp.configure()
-		FirebaseConfiguration().setLoggerLevel(.error)
+		SyncEngine.initBackend()
+		SyncEngine.initUpdaters()
+		SyncEngine.initObservers()
 
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		// Push notification initialization
@@ -67,14 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		OneSignal.inFocusDisplayType = OSNotificationDisplayType.none
 
 		//-----------------------------------------------------------------------------------------------------------------------------------------
-		// Firebase auth issue fix
-		//-----------------------------------------------------------------------------------------------------------------------------------------
-		if (UserDefaults.bool(key: "Initialized") == false) {
-			UserDefaults.setObject(value: true, key: "Initialized")
-			AuthUser.logOut()
-		}
-
-		//-----------------------------------------------------------------------------------------------------------------------------------------
 		// Manager initialization
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		_ = ChatManager.shared
@@ -85,12 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// MediaUploader initialization
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		_ = MediaUploader.shared
-
-		//-----------------------------------------------------------------------------------------------------------------------------------------
-		// SyncEngine initialization
-		//-----------------------------------------------------------------------------------------------------------------------------------------
-		_ = DataObservers.shared
-		_ = DataUpdaters.shared
 
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		// UI initialization
@@ -211,26 +196,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		client?.terminateGracefully()
 		client = nil
-	}
-
-	// MARK: - Push notification methods
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-
-		Auth.auth().setAPNSToken(deviceToken, type: .unknown)
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-
-		if (Auth.auth().canHandleNotification(userInfo)) {
-			completionHandler(.noData)
-		}
 	}
 
 	// MARK: - Home screen dynamic quick action methods

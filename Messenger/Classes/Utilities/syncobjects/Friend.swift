@@ -28,6 +28,7 @@ class Friend: SyncObject {
 		try! realm.safeWrite {
 			isDeleted = value
 			syncRequired = true
+			updatedAt = Date().timestamp()
 		}
 	}
 }

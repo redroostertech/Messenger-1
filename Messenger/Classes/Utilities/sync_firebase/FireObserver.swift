@@ -13,7 +13,7 @@ import FirebaseFirestore
 import RealmSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class DataObserver: NSObject {
+class FireObserver: NSObject {
 
 	private var query: Query!
 	private var type: SyncObject.Type!

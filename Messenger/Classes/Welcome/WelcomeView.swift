@@ -15,17 +15,6 @@ import UIKit
 class WelcomeView: UIViewController {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	@IBAction func actionLoginPhone(_ sender: Any) {
-
-		let loginPhoneView = LoginPhoneView()
-		loginPhoneView.delegate = self
-		let navController = NavigationController(rootViewController: loginPhoneView)
-		navController.isModalInPresentation = true
-		navController.modalPresentationStyle = .fullScreen
-		present(navController, animated: true)
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
 	@IBAction func actionLoginEmail(_ sender: Any) {
 
 		let loginEmailView = LoginEmailView()
@@ -43,19 +32,6 @@ class WelcomeView: UIViewController {
 		registerEmailView.isModalInPresentation = true
 		registerEmailView.modalPresentationStyle = .fullScreen
 		present(registerEmailView, animated: true)
-	}
-}
-
-// MARK: - LoginPhoneDelegate
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-extension WelcomeView: LoginPhoneDelegate {
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func didLoginUserPhone() {
-
-		dismiss(animated: true) {
-			Users.loggedIn()
-		}
 	}
 }
 

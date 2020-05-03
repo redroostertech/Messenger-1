@@ -22,4 +22,11 @@ class NYTPhotoItem: NSObject, NYTPhoto {
 	var attributedCaptionCredit: NSAttributedString?
 
 	var objectId = ""
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	convenience init(image: UIImage) {
+
+		self.init()
+		self.image = image
+	}
 }

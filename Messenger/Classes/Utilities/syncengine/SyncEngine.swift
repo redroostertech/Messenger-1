@@ -9,32 +9,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Foundation
+import Firebase
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class MediaUpload: NSObject {
+class SyncEngine: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func user(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+	class func initBackend() {
 
-		FireStorage.upload(data: data, dir: "user", name: name, ext: "jpg", completion: completion)
+		//-----------------------------------------------------------------------------------------------------------------------------------------
+		// Firebase initialization
+		//-----------------------------------------------------------------------------------------------------------------------------------------
+		FirebaseApp.configure()
+		FirebaseConfiguration().setLoggerLevel(.error)
+
+		//-----------------------------------------------------------------------------------------------------------------------------------------
+		// Firebase auth issue fix
+		//-----------------------------------------------------------------------------------------------------------------------------------------
+		if (UserDefaults.bool(key: "Initialized") == false) {
+			UserDefaults.setObject(value: true, key: "Initialized")
+			AuthUser.logOut()
+		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func photo(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+	class func initUpdaters() {
 
-		FireStorage.upload(data: data, dir: "media", name: name, ext: "jpg", completion: completion)
+		_ = FireUpdaters.shared
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func video(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+	class func initObservers() {
 
-		FireStorage.upload(data: data, dir: "media", name: name, ext: "mp4", completion: completion)
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func audio(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
-
-		FireStorage.upload(data: data, dir: "media", name: name, ext: "m4a", completion: completion)
+		_ = FireObservers.shared
 	}
 }

@@ -12,24 +12,24 @@
 import FirebaseFirestore
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class DataObservers: NSObject {
+class FireObservers: NSObject {
 
-	private var observerPerson:		DataObserver?
-	private var observerFriend:		DataObserver?
-	private var observerBlocked:	DataObserver?
-	private var observerBlocker:	DataObserver?
-	private var observerSingle1:	DataObserver?
-	private var observerSingle2:	DataObserver?
-	private var observerMember:		DataObserver?
+	private var observerPerson:		FireObserver?
+	private var observerFriend:		FireObserver?
+	private var observerBlocked:	FireObserver?
+	private var observerBlocker:	FireObserver?
+	private var observerSingle1:	FireObserver?
+	private var observerSingle2:	FireObserver?
+	private var observerMember:		FireObserver?
 
-	private var observerMembers:	[String: DataObserver] = [:]
-	private var observerGroups:		[String: DataObserver] = [:]
-	private var observerDetails:	[String: DataObserver] = [:]
-	private var observerMessages:	[String: DataObserver] = [:]
+	private var observerMembers:	[String: FireObserver] = [:]
+	private var observerGroups:		[String: FireObserver] = [:]
+	private var observerDetails:	[String: FireObserver] = [:]
+	private var observerMessages:	[String: FireObserver] = [:]
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	static let shared: DataObservers = {
-		let instance = DataObservers()
+	static let shared: FireObservers = {
+		let instance = FireObservers()
 		return instance
 	} ()
 
@@ -86,7 +86,7 @@ class DataObservers: NSObject {
 
 		let query = Firestore.firestore().collection("Person")
 			.whereField("updatedAt", isGreaterThan: Person.lastUpdatedAt())
-		observerPerson = DataObserver(query, to: Person.self)
+		observerPerson = FireObserver(query, to: Person.self)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ class DataObservers: NSObject {
 
 		let query = Firestore.firestore().collection("Friend")
 			.whereField("userId", isEqualTo: AuthUser.userId())
-		observerFriend = DataObserver(query, to: Friend.self)
+		observerFriend = FireObserver(query, to: Friend.self)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ class DataObservers: NSObject {
 
 		let query = Firestore.firestore().collection("Blocked")
 			.whereField("blockedId", isEqualTo: AuthUser.userId())
-		observerBlocked = DataObserver(query, to: Blocked.self)
+		observerBlocked = FireObserver(query, to: Blocked.self)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ class DataObservers: NSObject {
 
 		let query = Firestore.firestore().collection("Blocked")
 			.whereField("blockerId", isEqualTo: AuthUser.userId())
-		observerBlocker = DataObserver(query, to: Blocked.self)
+		observerBlocker = FireObserver(query, to: Blocked.self)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ class DataObservers: NSObject {
 
 		let query = Firestore.firestore().collection("Single")
 			.whereField("userId1", isEqualTo: AuthUser.userId())
-		observerSingle1 = DataObserver(query, to: Single.self)
+		observerSingle1 = FireObserver(query, to: Single.self)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ class DataObservers: NSObject {
 
 		let query = Firestore.firestore().collection("Single")
 			.whereField("userId2", isEqualTo: AuthUser.userId())
-		observerSingle2 = DataObserver(query, to: Single.self)
+		observerSingle2 = FireObserver(query, to: Single.self)
 	}
 
 	// MARK: -
@@ -135,7 +135,7 @@ class DataObservers: NSObject {
 
 		let query = Firestore.firestore().collection("Member")
 			.whereField("userId", isEqualTo: AuthUser.userId())
-		observerMember = DataObserver(query, to: Member.self) { insert, modify in
+		observerMember = FireObserver(query, to: Member.self) { insert, modify in
 			if (insert) {
 				if let chatIds = Members.chatIds() {
 					self.createObserverMembers(chatIds)
@@ -154,7 +154,7 @@ class DataObservers: NSObject {
 		for chatId in chatIds {
 			if (observerMembers[chatId] == nil) {
 				let query = Firestore.firestore().collection("Member").whereField("chatId", isEqualTo: chatId)
-				observerMembers[chatId] = DataObserver(query, to: Member.self)
+				observerMembers[chatId] = FireObserver(query, to: Member.self)
 			}
 		}
 	}
@@ -165,7 +165,7 @@ class DataObservers: NSObject {
 		for chatId in chatIds {
 			if (observerGroups[chatId] == nil) {
 				let query = Firestore.firestore().collection("Group").whereField("chatId", isEqualTo: chatId)
-				observerGroups[chatId] = DataObserver(query, to: Group.self)
+				observerGroups[chatId] = FireObserver(query, to: Group.self)
 			}
 		}
 	}
@@ -176,7 +176,7 @@ class DataObservers: NSObject {
 		for chatId in chatIds {
 			if (observerDetails[chatId] == nil) {
 				let query = Firestore.firestore().collection("Detail").whereField("chatId", isEqualTo: chatId)
-				observerDetails[chatId] = DataObserver(query, to: Detail.self)
+				observerDetails[chatId] = FireObserver(query, to: Detail.self)
 			}
 		}
 	}
@@ -188,7 +188,7 @@ class DataObservers: NSObject {
 			if (observerMessages[chatId] == nil) {
 				let query = Firestore.firestore().collection("Message").whereField("chatId", isEqualTo: chatId)
 					.whereField("updatedAt", isGreaterThan: Message.lastUpdatedAt(chatId))
-				observerMessages[chatId] = DataObserver(query, to: Message.self)
+				observerMessages[chatId] = FireObserver(query, to: Message.self)
 			}
 		}
 	}
