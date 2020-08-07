@@ -171,8 +171,10 @@ class PeopleView: UIViewController {
 			attributeSet.contentDescription = person.country
 			attributeSet.keywords = [person.firstname, person.lastname, person.country]
 
-			if let path = MediaDownload.pathUser(person.objectId) {
-				attributeSet.thumbnailURL = URL(fileURLWithPath: path)
+			if let path = Media.pathUser(person.objectId) {
+				if let dataEncrypted = Data(path: path) {
+					attributeSet.thumbnailData = Cryptor.decrypt(data: dataEncrypted)
+				}
 			}
 
 			items.append(CSSearchableItem(uniqueIdentifier: person.objectId, domainIdentifier: bundleId, attributeSet: attributeSet))

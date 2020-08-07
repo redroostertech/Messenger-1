@@ -18,8 +18,8 @@ class Detail: SyncObject {
 	@objc dynamic var userId = ""
 
 	@objc dynamic var typing = false
-	@objc dynamic var lastRead: Int64 = 0
-	@objc dynamic var mutedUntil: Int64 = 0
+	@objc dynamic var lastRead: Int = 0
+	@objc dynamic var mutedUntil: Int = 0
 
 	@objc dynamic var isDeleted = false
 	@objc dynamic var isArchived = false
@@ -38,7 +38,7 @@ class Detail: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(lastRead value: Int64) {
+	func update(lastRead value: Int) {
 
 		if (lastRead == value) { return }
 
@@ -51,7 +51,7 @@ class Detail: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(mutedUntil value: Int64) {
+	func update(mutedUntil value: Int) {
 
 		if (mutedUntil == value) { return }
 

@@ -15,9 +15,22 @@ import UIKit
 extension UIImage {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
+	convenience init?(path: String) {
+
+		if let dataEncrypted = Data(path: path) {
+			if let dataDecrypted = Cryptor.decrypt(data: dataEncrypted) {
+				self.init(data: dataDecrypted)
+				return
+			}
+		}
+
+		return nil
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func image(_ path: String, size: CGFloat) -> UIImage? {
 
-		let image = UIImage(contentsOfFile: path)
+		let image = UIImage(path: path)
 		return image?.square(to: size)
 	}
 
@@ -63,7 +76,7 @@ extension UIImage {
 
 		if let cgImage = self.cgImage {
 			if let cropped = cgImage.cropping(to: rect) {
-				return UIImage(cgImage: cropped)
+				return UIImage(cgImage: cropped, scale: self.scale, orientation: self.imageOrientation)
 			}
 		}
 

@@ -15,26 +15,32 @@ import Foundation
 class MediaUpload: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func user(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+	class func user(_ name: String, data: Data, completion: @escaping (Error?) -> Void) {
 
-		FireStorage.upload(data: data, dir: "user", name: name, ext: "jpg", completion: completion)
+		start(dir: "user", name: name, ext: "jpg", data: data, completion: completion)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func photo(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+	class func photo(_ name: String, data: Data, completion: @escaping (Error?) -> Void) {
 
-		FireStorage.upload(data: data, dir: "media", name: name, ext: "jpg", completion: completion)
+		start(dir: "media", name: name, ext: "jpg", data: data, completion: completion)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func video(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+	class func video(_ name: String, data: Data, completion: @escaping (Error?) -> Void) {
 
-		FireStorage.upload(data: data, dir: "media", name: name, ext: "mp4", completion: completion)
+		start(dir: "media", name: name, ext: "mp4", data: data, completion: completion)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func audio(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+	class func audio(_ name: String, data: Data, completion: @escaping (Error?) -> Void) {
 
-		FireStorage.upload(data: data, dir: "media", name: name, ext: "m4a", completion: completion)
+		start(dir: "media", name: name, ext: "m4a", data: data, completion: completion)
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func start(dir: String, name: String, ext: String, data: Data, completion: @escaping (Error?) -> Void) {
+
+		FireStorage.upload(dir: dir, name: name, ext: ext, data: data, completion: completion)
 	}
 }

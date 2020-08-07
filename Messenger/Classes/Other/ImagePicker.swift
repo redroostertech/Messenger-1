@@ -56,7 +56,7 @@ class ImagePicker: NSObject {
 					let imagePicker = UIImagePickerController()
 					imagePicker.mediaTypes = [type]
 					imagePicker.sourceType = .camera
-					imagePicker.videoMaximumDuration = TimeInterval(VIDEO_LENGTH)
+					imagePicker.videoMaximumDuration = App.MaxVideoDuration
 
 					if (UIImagePickerController.isCameraDeviceAvailable(.rear)) {
 						imagePicker.cameraDevice = .rear
@@ -87,7 +87,7 @@ class ImagePicker: NSObject {
 					let imagePicker = UIImagePickerController()
 					imagePicker.mediaTypes = [type1, type2]
 					imagePicker.sourceType = .camera
-					imagePicker.videoMaximumDuration = TimeInterval(VIDEO_LENGTH)
+					imagePicker.videoMaximumDuration = App.MaxVideoDuration
 
 					if (UIImagePickerController.isCameraDeviceAvailable(.rear)) {
 						imagePicker.cameraDevice = .rear
@@ -154,7 +154,7 @@ class ImagePicker: NSObject {
 					let imagePicker = UIImagePickerController()
 					imagePicker.sourceType = .photoLibrary
 					imagePicker.mediaTypes = [type]
-					imagePicker.videoMaximumDuration = TimeInterval(VIDEO_LENGTH)
+					imagePicker.videoMaximumDuration = App.MaxVideoDuration
 
 					let viewController = target as! UIViewController
 					imagePicker.allowsEditing = edit
@@ -170,7 +170,7 @@ class ImagePicker: NSObject {
 					let imagePicker = UIImagePickerController()
 					imagePicker.sourceType = .savedPhotosAlbum
 					imagePicker.mediaTypes = [type]
-					imagePicker.videoMaximumDuration = TimeInterval(VIDEO_LENGTH)
+					imagePicker.videoMaximumDuration = App.MaxVideoDuration
 
 					let viewController = target as! UIViewController
 					imagePicker.allowsEditing = edit

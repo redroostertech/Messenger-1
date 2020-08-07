@@ -21,14 +21,14 @@ class Convert: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func timestampToMediumTime(_ timestamp: Int64) -> String {
+	class func timestampToMediumTime(_ timestamp: Int) -> String {
 
 		let date = Date.date(timestamp: timestamp)
 		return DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func timestampToDayMonthTime(_ timestamp: Int64) -> String {
+	class func timestampToDayMonthTime(_ timestamp: Int) -> String {
 
 		let date = Date.date(timestamp: timestamp)
 
@@ -39,7 +39,7 @@ class Convert: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func timestampToElapsed(_ timestamp: Int64) -> String {
+	class func timestampToElapsed(_ timestamp: Int) -> String {
 
 		var elapsed = ""
 
@@ -70,7 +70,7 @@ class Convert: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func timestampToCustom(_ timestamp: Int64?) -> String {
+	class func timestampToCustom(_ timestamp: Int?) -> String {
 
 		guard let timestamp = timestamp else { return "" }
 

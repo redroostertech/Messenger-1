@@ -50,28 +50,28 @@ class RCMessageVideoCell: RCMessageCell {
 			viewBubble.addSubview(imageViewManual)
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_UNKNOWN) {
+		if (rcmessage.mediaStatus == MediaStatus.Unknown) {
 			imageViewThumb.image = nil
 			imageViewPlay.isHidden = true
 			activityIndicator.stopAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_LOADING) {
+		if (rcmessage.mediaStatus == MediaStatus.Loading) {
 			imageViewThumb.image = nil
 			imageViewPlay.isHidden = true
 			activityIndicator.startAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+		if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 			imageViewThumb.image = rcmessage.videoThumbnail
 			imageViewPlay.isHidden = false
 			activityIndicator.stopAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+		if (rcmessage.mediaStatus == MediaStatus.Manual) {
 			imageViewThumb.image = nil
 			imageViewPlay.isHidden = true
 			activityIndicator.stopAnimating()

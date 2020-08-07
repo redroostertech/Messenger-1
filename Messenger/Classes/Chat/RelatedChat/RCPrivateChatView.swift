@@ -34,7 +34,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 	private var messageToDisplay: Int = 12
 
 	private var typingCounter: Int = 0
-	private var lastRead: Int64 = 0
+	private var lastRead: Int = 0
 
 	private var indexForward: IndexPath?
 
@@ -189,7 +189,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func loadMedia(_ rcmessage: RCMessage) {
 
-		if (rcmessage.mediaStatus != MEDIASTATUS_UNKNOWN)	 { return }
+		if (rcmessage.mediaStatus != MediaStatus.Unknown) { return }
 		if (rcmessage.incoming) && (rcmessage.isMediaQueued) { return }
 		if (rcmessage.incoming) && (rcmessage.isMediaFailed) { return }
 
@@ -214,14 +214,14 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 		var imageAvatar = avatarImages[rcmessage.userId]
 
 		if (imageAvatar == nil) {
-			if let path = MediaDownload.pathUser(rcmessage.userId) {
+			if let path = Media.pathUser(rcmessage.userId) {
 				imageAvatar = UIImage.image(path, size: 30)
 				avatarImages[rcmessage.userId] = imageAvatar
 			}
 		}
 
 		if (imageAvatar == nil) {
-			MediaDownload.startUser(rcmessage.userId, pictureAt: rcmessage.userPictureAt) { image, error in
+			MediaDownload.user(rcmessage.userId, pictureAt: rcmessage.userPictureAt) { image, error in
 				if (error == nil) {
 					self.refreshTableView()
 				}
@@ -507,36 +507,35 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 
 		let rcmessage = rcmessageAt(indexPath)
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+		if (rcmessage.mediaStatus == MediaStatus.Manual) {
 			if (rcmessage.type == MESSAGE_PHOTO) { RCPhotoLoader.manual(rcmessage, in: tableView) }
 			if (rcmessage.type == MESSAGE_VIDEO) { RCVideoLoader.manual(rcmessage, in: tableView) }
 			if (rcmessage.type == MESSAGE_AUDIO) { RCAudioLoader.manual(rcmessage, in: tableView) }
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+		if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 			if (rcmessage.type == MESSAGE_PHOTO) {
 				let pictureView = PictureView(chatId: chatId, messageId: rcmessage.messageId)
 				present(pictureView, animated: true)
 			}
 			if (rcmessage.type == MESSAGE_VIDEO) {
-				let url = URL(fileURLWithPath: rcmessage.videoPath)
-				let videoView = VideoView(url: url)
+				let videoView = VideoView(path: rcmessage.videoPath)
 				present(videoView, animated: true)
 			}
 			if (rcmessage.type == MESSAGE_AUDIO) {
-				if (rcmessage.audioStatus == AUDIOSTATUS_STOPPED) {
+				if (rcmessage.audioStatus == AudioStatus.Stopped) {
 					if let sound = Sound(contentsOfFile: rcmessage.audioPath) {
 						sound.completionHandler = { didFinish in
-							rcmessage.audioStatus = AUDIOSTATUS_STOPPED
+							rcmessage.audioStatus = AudioStatus.Stopped
 							self.refreshTableView()
 						}
 						SoundManager.shared().playSound(sound)
-						rcmessage.audioStatus = AUDIOSTATUS_PLAYING
+						rcmessage.audioStatus = AudioStatus.Playing
 						refreshTableView()
 					}
-				} else if (rcmessage.audioStatus == AUDIOSTATUS_PLAYING) {
+				} else if (rcmessage.audioStatus == AudioStatus.Playing) {
 					SoundManager.shared().stopAllSounds(false)
-					rcmessage.audioStatus = AUDIOSTATUS_STOPPED
+					rcmessage.audioStatus = AudioStatus.Stopped
 					refreshTableView()
 				}
 			}
@@ -577,7 +576,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 			let rcmessage = rcmessageAt(indexPath)
 
 			if (rcmessage.type == MESSAGE_PHOTO) {
-				if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+				if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 					if let image = rcmessage.photoImage {
 						UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 					}
@@ -585,13 +584,13 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 			}
 
 			if (rcmessage.type == MESSAGE_VIDEO) {
-				if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+				if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 					UISaveVideoAtPathToSavedPhotosAlbum(rcmessage.videoPath, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
 				}
 			}
 
 			if (rcmessage.type == MESSAGE_AUDIO) {
-				if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+				if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 					let path = File.temp(ext: "mp4")
 					File.copy(src: rcmessage.audioPath, dest: path, overwrite: true)
 					UISaveVideoAtPathToSavedPhotosAlbum(path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)

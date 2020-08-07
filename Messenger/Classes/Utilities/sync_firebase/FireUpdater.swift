@@ -30,34 +30,26 @@ class FireUpdater: NSObject {
 
 		let predicate = NSPredicate(format: "syncRequired == YES")
 		objects = realm.objects(type).filter(predicate).sorted(byKeyPath: "updatedAt")
-
-		Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
-			if (AuthUser.userId() != "") {
-				if (Connectivity.isReachable()) {
-					self.updateNextObject()
-				}
-			}
-		}
 	}
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func updateNextObject() {
+	func updateNext() {
 
 		if (updating) { return }
 
 		if let object = objects?.first {
-			updateObject(object)
+			update(object)
 		}
 	}
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func updateObject(_ object: SyncObject) {
+	private func update(_ object: SyncObject) {
 
 		updating = true
 
-		let values = populateObject(object)
+		let values = populate(object)
 
 		if (object.neverSynced) {
 			Firestore.firestore().collection(collection).document(object.objectId).setData(values) { error in
@@ -78,7 +70,7 @@ class FireUpdater: NSObject {
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func populateObject(_ object: SyncObject) -> [String: Any] {
+	private func populate(_ object: SyncObject) -> [String: Any] {
 
 		var values: [String: Any] = [:]
 
@@ -86,7 +78,7 @@ class FireUpdater: NSObject {
 			let name = property.name
 			if (name != "neverSynced") && (name != "syncRequired") {
 				switch property.type {
-					case .int:		if let value = object[name] as? Int64	{ values[name] = value }
+					case .int:		if let value = object[name] as? Int		{ values[name] = value }
 					case .bool:		if let value = object[name] as? Bool	{ values[name] = value }
 					case .float:	if let value = object[name] as? Float	{ values[name] = value }
 					case .double:	if let value = object[name] as? Double	{ values[name] = value }
@@ -96,6 +88,15 @@ class FireUpdater: NSObject {
 				}
 			}
 		}
+
+		for property in type(of: object).encryptedProperties() {
+			if let value = object[property] as? String {
+				if let encrypted = Cryptor.encrypt(text: value) {
+					values[property] = encrypted
+				}
+			}
+		}
+
 		return values
 	}
 }

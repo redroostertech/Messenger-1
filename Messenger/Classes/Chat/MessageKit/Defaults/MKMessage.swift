@@ -86,7 +86,7 @@ class MKMessage: NSObject, MessageType {
 	var userId: String
 	var userFullname: String
 	var userInitials: String
-	var userPictureAt: Int64
+	var userPictureAt: Int
 
 	var mksender: MKSender
 
@@ -106,7 +106,7 @@ class MKMessage: NSObject, MessageType {
 	var incoming: Bool
 	var outgoing: Bool
 
-	var mediaStatus: Int32
+	var mediaStatus: Int
 
 	var sender: SenderType { return mksender }
 
@@ -165,7 +165,7 @@ class MKMessage: NSObject, MessageType {
 		self.incoming = (message.userId != currentId)
 		self.outgoing = (message.userId == currentId)
 
-		self.mediaStatus = MEDIASTATUS_UNKNOWN
+		self.mediaStatus = MediaStatus.Unknown
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------

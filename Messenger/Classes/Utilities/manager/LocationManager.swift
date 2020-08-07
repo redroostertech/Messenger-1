@@ -14,8 +14,8 @@ import CoreLocation
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class LocationManager: NSObject, CLLocationManagerDelegate {
 
-	var locationManager: CLLocationManager?
-	var coordinate = CLLocationCoordinate2D()
+	private var locationManager: CLLocationManager?
+	private var location = CLLocation()
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	static let shared: LocationManager = {
@@ -38,18 +38,30 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func latitude() -> CLLocationDegrees {
 
-		return shared.coordinate.latitude
+		return shared.location.coordinate.latitude
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func longitude() -> CLLocationDegrees {
 
-		return shared.coordinate.longitude
+		return shared.location.coordinate.longitude
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func address(completion: @escaping (String?, String?, String?) -> Void) {
+
+		CLGeocoder().reverseGeocodeLocation(shared.location) { placemarks, error in
+			if let placemark = placemarks?.first {
+				completion(placemark.locality, placemark.country, placemark.isoCountryCode)
+			} else {
+				completion(nil, nil, nil)
+			}
+		}
 	}
 
 	// MARK: - Instance methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	override init() {
+	private override init() {
 
 		super.init()
 
@@ -64,7 +76,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
 		if let location = locations.last {
-			coordinate = location.coordinate
+			self.location = location
 		}
 	}
 

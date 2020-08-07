@@ -18,23 +18,6 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-#define		DEFAULT_TAB							0
-#define		DEFAULT_COUNTRY						188
-//---------------------------------------------------------------------------------
-#define		VIDEO_LENGTH						5
-//---------------------------------------------------------------------------------
-#define		MEDIA_PHOTO							1
-#define		MEDIA_VIDEO							2
-#define		MEDIA_AUDIO							3
-//---------------------------------------------------------------------------------
-#define		NETWORK_MANUAL						1
-#define		NETWORK_WIFI						2
-#define		NETWORK_ALL							3
-//---------------------------------------------------------------------------------
-#define		KEEPMEDIA_WEEK						1
-#define		KEEPMEDIA_MONTH						2
-#define		KEEPMEDIA_FOREVER					3
-//---------------------------------------------------------------------------------
 #define		MESSAGE_TEXT						@"text"
 #define		MESSAGE_EMOJI						@"emoji"
 #define		MESSAGE_PHOTO						@"photo"
@@ -46,14 +29,6 @@
 #define		STATUS_FAILED						@"Failed"
 #define		STATUS_SENT							@"Sent"
 #define		STATUS_READ							@"Read"
-//---------------------------------------------------------------------------------
-#define		MEDIASTATUS_UNKNOWN					0
-#define		MEDIASTATUS_LOADING					1
-#define		MEDIASTATUS_MANUAL					2
-#define		MEDIASTATUS_SUCCEED					3
-//---------------------------------------------------------------------------------
-#define		AUDIOSTATUS_STOPPED					1
-#define		AUDIOSTATUS_PLAYING					2
 //---------------------------------------------------------------------------------
 #define		LOGIN_EMAIL							@"Email"
 #define		LOGIN_PHONE							@"Phone"

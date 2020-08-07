@@ -15,7 +15,7 @@ import FirebaseStorage
 class FireStorage: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func upload(data: Data, dir: String, name: String, ext: String, completion: @escaping (_ error: Error?) -> Void) {
+	class func upload(dir: String, name: String, ext: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
 
 		let storage = "\(dir)/\(name).\(ext)"
 		let reference = Storage.storage().reference(withPath: storage)
@@ -33,8 +33,9 @@ class FireStorage: NSObject {
 
 		let file = "\(name).\(ext)"
 		let path = Dir.document(dir, and: file)
+		let url = URL(fileURLWithPath: path)
 
-		reference.write(toFile: URL(fileURLWithPath: path)) { url, error in
+		reference.write(toFile: url) { url, error in
 			if (error != nil) {
 				File.remove(path: path)
 				completion("", error)

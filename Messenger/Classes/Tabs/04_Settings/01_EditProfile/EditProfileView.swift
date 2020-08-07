@@ -11,7 +11,6 @@
 
 import RealmSwift
 import ProgressHUD
-import IQKeyboardManagerSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class EditProfileView: UIViewController {
@@ -59,9 +58,6 @@ class EditProfileView: UIViewController {
 		navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(actionDismiss))
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(actionDone))
 
-		IQKeyboardManager.shared.enable = true
-		IQKeyboardManager.shared.enableAutoToolbar = false
-
 		let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
 		tableView.addGestureRecognizer(gestureRecognizer)
 		gestureRecognizer.cancelsTouchesInView = false
@@ -84,8 +80,6 @@ class EditProfileView: UIViewController {
 
 		super.viewWillDisappear(animated)
 
-		IQKeyboardManager.shared.enable = false
-
 		dismissKeyboard()
 	}
 
@@ -103,7 +97,7 @@ class EditProfileView: UIViewController {
 		person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId())
 
 		labelInitials.text = person.initials()
-		MediaDownload.startUser(person.objectId, pictureAt: person.pictureAt) { image, error in
+		MediaDownload.user(person.objectId, pictureAt: person.pictureAt) { image, error in
 			if (error == nil) {
 				self.imageUser.image = image?.square(to: 70)
 				self.labelInitials.text = nil
@@ -192,22 +186,33 @@ class EditProfileView: UIViewController {
 		present(navController, animated: true)
 	}
 
+	// MARK: - Upload methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func uploadPicture(image: UIImage) {
 
-		let temp = image.square(to: 300)
-		if let data = temp.jpegData(compressionQuality: 0.6) {
-			MediaUpload.user(AuthUser.userId(), data: data, completion: { error in
-				if (error == nil) {
-					MediaDownload.saveUser(AuthUser.userId(), data: data)
-					self.person.update(pictureAt: Date().timestamp())
-					self.imageUser.image = temp.square(to: 70)
-					self.labelInitials.text = nil
-				} else {
-					ProgressHUD.showError("Picture upload error.")
+		let squared = image.square(to: 300)
+		if let data = squared.jpegData(compressionQuality: 0.6) {
+			if let encrypted = Cryptor.encrypt(data: data) {
+				MediaUpload.user(AuthUser.userId(), data: encrypted) { error in
+					if (error == nil) {
+						self.pictureUploaded(image: squared, data: data)
+					} else {
+						ProgressHUD.showError("Picture upload error.")
+					}
 				}
-			})
+			}
 		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	func pictureUploaded(image: UIImage, data: Data) {
+
+		person.update(pictureAt: Date().timestamp())
+
+		Media.saveUser(AuthUser.userId(), data: data)
+
+		imageUser.image = image.square(to: 70)
+		labelInitials.text = nil
 	}
 
 	// MARK: - Helper methods

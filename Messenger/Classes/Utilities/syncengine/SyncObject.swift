@@ -19,13 +19,20 @@ class SyncObject: Object {
 	@objc dynamic var neverSynced: Bool = true
 	@objc dynamic var syncRequired: Bool = true
 
-	@objc dynamic var createdAt: Int64 = Date().timestamp()
-	@objc dynamic var updatedAt: Int64 = Date().timestamp()
+	@objc dynamic var createdAt: Int = Date().timestamp()
+	@objc dynamic var updatedAt: Int = Date().timestamp()
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	override static func primaryKey() -> String? {
 
 		return "objectId"
+	}
+
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func encryptedProperties() -> [String] {
+
+		return []
 	}
 
 	// MARK: -

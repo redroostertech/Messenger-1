@@ -50,8 +50,8 @@ class RCMessageAudioCell: RCMessageCell {
 			viewBubble.addSubview(imageViewManual)
 		}
 
-		if (rcmessage.audioStatus == AUDIOSTATUS_STOPPED) { imageViewPlay.image = RCDefaults.audioImagePlay		}
-		if (rcmessage.audioStatus == AUDIOSTATUS_PLAYING) { imageViewPlay.image = RCDefaults.audioImagePause	}
+		if (rcmessage.audioStatus == AudioStatus.Stopped) { imageViewPlay.image = RCDefaults.audioImagePlay		}
+		if (rcmessage.audioStatus == AudioStatus.Playing) { imageViewPlay.image = RCDefaults.audioImagePause	}
 
 		labelDuration.textColor = rcmessage.incoming ? RCDefaults.audioTextColorIncoming : RCDefaults.audioTextColorOutgoing
 
@@ -61,28 +61,28 @@ class RCMessageAudioCell: RCMessageCell {
 			labelDuration.text = String(format: "%ld:%02ld", rcmessage.audioDuration / 60, rcmessage.audioDuration % 60)
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_UNKNOWN) {
+		if (rcmessage.mediaStatus == MediaStatus.Unknown) {
 			imageViewPlay.isHidden = true
 			labelDuration.isHidden = true
 			activityIndicator.stopAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_LOADING) {
+		if (rcmessage.mediaStatus == MediaStatus.Loading) {
 			imageViewPlay.isHidden = true
 			labelDuration.isHidden = true
 			activityIndicator.startAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+		if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 			imageViewPlay.isHidden = false
 			labelDuration.isHidden = false
 			activityIndicator.stopAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+		if (rcmessage.mediaStatus == MediaStatus.Manual) {
 			imageViewPlay.isHidden = true
 			labelDuration.isHidden = true
 			activityIndicator.stopAnimating()

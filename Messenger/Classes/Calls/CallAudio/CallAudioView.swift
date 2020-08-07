@@ -133,7 +133,7 @@ class CallAudioView: UIViewController {
 			person = realm.object(ofType: Person.self, forPrimaryKey: remoteUserId)
 
 			labelInitials.text = person.initials()
-			MediaDownload.startUser(person.objectId, pictureAt: person.pictureAt) { image, error in
+			MediaDownload.user(person.objectId, pictureAt: person.pictureAt) { image, error in
 				if (error == nil) {
 					self.imageUser.image = image?.square(to: 70)
 					self.labelInitials.text = nil

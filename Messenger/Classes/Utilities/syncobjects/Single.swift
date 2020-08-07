@@ -19,10 +19,10 @@ class Single: SyncObject {
 	@objc dynamic var userId1 = ""
 	@objc dynamic var fullname1 = ""
 	@objc dynamic var initials1 = ""
-	@objc dynamic var pictureAt1: Int64 = 0
+	@objc dynamic var pictureAt1: Int = 0
 
 	@objc dynamic var userId2 = ""
 	@objc dynamic var fullname2 = ""
 	@objc dynamic var initials2 = ""
-	@objc dynamic var pictureAt2: Int64 = 0
+	@objc dynamic var pictureAt2: Int = 0
 }

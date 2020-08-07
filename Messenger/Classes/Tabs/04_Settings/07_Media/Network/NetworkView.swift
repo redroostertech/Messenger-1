@@ -19,11 +19,11 @@ class NetworkView: UIViewController {
 	@IBOutlet var cellWiFi: UITableViewCell!
 	@IBOutlet var cellAll: UITableViewCell!
 
-	private var mediaType: Int32 = 0
-	private var selectedNetwork: Int32 = 0
+	private var mediaType: Int = 0
+	private var selectedNetwork: Int = 0
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	init(mediaType: Int32) {
+	init(mediaType: Int) {
 
 		super.init(nibName: nil, bundle: nil)
 
@@ -41,13 +41,13 @@ class NetworkView: UIViewController {
 
 		super.viewDidLoad()
 
-		if (mediaType == MEDIA_PHOTO) { title = "Photo" }
-		if (mediaType == MEDIA_VIDEO) { title = "Video" }
-		if (mediaType == MEDIA_AUDIO) { title = "Audio" }
+		if (mediaType == MediaType.Photo) { title = "Photo" }
+		if (mediaType == MediaType.Video) { title = "Video" }
+		if (mediaType == MediaType.Audio) { title = "Audio" }
 
-		if (mediaType == MEDIA_PHOTO) { selectedNetwork = Persons.networkPhoto() }
-		if (mediaType == MEDIA_VIDEO) { selectedNetwork = Persons.networkVideo() }
-		if (mediaType == MEDIA_AUDIO) { selectedNetwork = Persons.networkAudio() }
+		if (mediaType == MediaType.Photo) { selectedNetwork = Persons.networkPhoto() }
+		if (mediaType == MediaType.Video) { selectedNetwork = Persons.networkVideo() }
+		if (mediaType == MediaType.Audio) { selectedNetwork = Persons.networkAudio() }
 
 		updateDetails()
 	}
@@ -56,9 +56,9 @@ class NetworkView: UIViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func updateDetails() {
 
-		cellManual.accessoryType = (selectedNetwork == NETWORK_MANUAL) ? .checkmark : .none
-		cellWiFi.accessoryType	 = (selectedNetwork == NETWORK_WIFI) ? .checkmark : .none
-		cellAll.accessoryType	 = (selectedNetwork == NETWORK_ALL) ? .checkmark : .none
+		cellManual.accessoryType = (selectedNetwork == Network.Manual) ? .checkmark : .none
+		cellWiFi.accessoryType	 = (selectedNetwork == Network.WiFi) ? .checkmark : .none
+		cellAll.accessoryType	 = (selectedNetwork == Network.All) ? .checkmark : .none
 
 		tableView.reloadData()
 	}
@@ -100,13 +100,13 @@ extension NetworkView: UITableViewDelegate {
 
 		tableView.deselectRow(at: indexPath, animated: true)
 
-		if (indexPath.section == 0) && (indexPath.row == 0) { selectedNetwork = NETWORK_MANUAL	}
-		if (indexPath.section == 0) && (indexPath.row == 1) { selectedNetwork = NETWORK_WIFI	}
-		if (indexPath.section == 0) && (indexPath.row == 2) { selectedNetwork = NETWORK_ALL		}
+		if (indexPath.section == 0) && (indexPath.row == 0) { selectedNetwork = Network.Manual	}
+		if (indexPath.section == 0) && (indexPath.row == 1) { selectedNetwork = Network.WiFi	}
+		if (indexPath.section == 0) && (indexPath.row == 2) { selectedNetwork = Network.All		}
 
-		if (mediaType == MEDIA_PHOTO) { Persons.update(networkPhoto: selectedNetwork) }
-		if (mediaType == MEDIA_VIDEO) { Persons.update(networkVideo: selectedNetwork) }
-		if (mediaType == MEDIA_AUDIO) { Persons.update(networkAudio: selectedNetwork) }
+		if (mediaType == MediaType.Photo) { Persons.update(networkPhoto: selectedNetwork) }
+		if (mediaType == MediaType.Video) { Persons.update(networkVideo: selectedNetwork) }
+		if (mediaType == MediaType.Audio) { Persons.update(networkAudio: selectedNetwork) }
 
 		updateDetails()
 	}

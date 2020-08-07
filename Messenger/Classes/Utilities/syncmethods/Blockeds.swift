@@ -10,7 +10,6 @@
 // THE SOFTWARE.
 
 import RealmSwift
-import CryptoSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class Blockeds: NSObject {
@@ -27,7 +26,7 @@ class Blockeds: NSObject {
 		let realm = try! Realm()
 		try! realm.safeWrite {
 			let blocked = Blocked()
-			blocked.objectId = "\(AuthUser.userId())-\(userId)".md5()
+			blocked.objectId = "\(AuthUser.userId())-\(userId)".sha1()
 			blocked.blockerId = AuthUser.userId()
 			blocked.blockedId = userId
 			realm.add(blocked, update: .modified)

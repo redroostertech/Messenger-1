@@ -43,12 +43,12 @@ class PictureView: NYTPhotosViewController {
 								NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)]
 
 		for message in messages {
-			if let path = MediaDownload.pathPhoto(message.objectId) {
+			if let path = Media.pathPhoto(message.objectId) {
 				let title = message.userFullname
 				let credit = Convert.timestampToDayMonthTime(message.createdAt)
 
 				let photoItem = NYTPhotoItem()
-				photoItem.image = UIImage(contentsOfFile: path)
+				photoItem.image = UIImage(path: path)
 				photoItem.attributedCaptionTitle = NSAttributedString(string: title, attributes: attributesTitle)
 				photoItem.attributedCaptionCredit = NSAttributedString(string: credit, attributes: attributesCredit)
 				photoItem.objectId = message.objectId

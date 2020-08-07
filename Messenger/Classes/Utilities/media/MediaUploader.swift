@@ -18,6 +18,8 @@ class MediaUploader: NSObject {
 
 	private var messages = realm.objects(Message.self).filter(falsepredicate)
 
+	private var timer: Timer?
+
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	static let shared: MediaUploader = {
 		let instance = MediaUploader()
@@ -29,38 +31,40 @@ class MediaUploader: NSObject {
 
 		super.init()
 
-		loadMessages()
+		NotificationCenter.addObserver(target: self, selector: #selector(initTimer), name: NOTIFICATION_USER_LOGGED_IN)
+		NotificationCenter.addObserver(target: self, selector: #selector(stopTimer), name: NOTIFICATION_USER_LOGGED_OUT)
 
-		NotificationCenter.addObserver(target: self, selector: #selector(loadMessages), name: NOTIFICATION_USER_LOGGED_IN)
-		NotificationCenter.addObserver(target: self, selector: #selector(unloadMessages), name: NOTIFICATION_USER_LOGGED_OUT)
+		if (AuthUser.userId() != "") {
+			initTimer()
+		}
+	}
 
-		Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
-			if (AuthUser.userId() != "") {
-				if (Connectivity.isReachable()) {
-					self.uploadNextMedia()
-				}
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	@objc private func initTimer() {
+
+		let predicate = NSPredicate(format: "userId == %@ AND isMediaQueued == YES AND isMediaFailed == NO", AuthUser.userId())
+		messages = realm.objects(Message.self).filter(predicate).sorted(byKeyPath: "updatedAt")
+
+		timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
+			if (Connectivity.isReachable()) {
+				self.uploadNext()
 			}
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	@objc private func loadMessages() {
-
-		if (AuthUser.userId() != "") {
-			let predicate = NSPredicate(format: "userId == %@ AND isMediaQueued == YES AND isMediaFailed == NO", AuthUser.userId())
-			messages = realm.objects(Message.self).filter(predicate).sorted(byKeyPath: "updatedAt")
-		}
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	@objc private func unloadMessages() {
+	@objc private func stopTimer() {
 
 		messages = realm.objects(Message.self).filter(falsepredicate)
+
+		timer?.invalidate()
+		timer = nil
 	}
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func uploadNextMedia() {
+	private func uploadNext() {
 
 		if (uploading) { return }
 
@@ -90,42 +94,40 @@ class MediaUploader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func uploadPhoto(message: Message, completion: @escaping (_ error: Error?) -> Void) {
 
-		if let path = MediaDownload.pathPhoto(message.objectId) {
-			if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-				if let crypted = Cryptor.encrypt(data: data, chatId: message.chatId) {
-					MediaUpload.photo(message.objectId, data: crypted, completion: { error in
-						completion(error)
-					})
-				} else { completion(NSError.description("Media encryption error.", code: 101)) }
-			} else { completion(NSError.description("Media file error.", code: 102)) }
-		} else { completion(NSError.description("Missing media file.", code: 103)) }
+		if let path = Media.pathPhoto(message.objectId) {
+			if let data = Data(path: path) {
+				MediaUpload.photo(message.objectId, data: data) { error in
+					completion(error)
+				}
+			} else { completion(NSError("Media file error.", 102)) }
+		} else { completion(NSError("Missing media file.", 103)) }
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func uploadVideo(message: Message, completion: @escaping (_ error: Error?) -> Void) {
 
-		if let path = MediaDownload.pathVideo(message.objectId) {
-			if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-				if let crypted = Cryptor.encrypt(data: data, chatId: message.chatId) {
-					MediaUpload.video(message.objectId, data: crypted, completion: { error in
+		if let path = Media.pathVideo(message.objectId) {
+			if let data = Data(path: path) {
+				if let encrypted = Cryptor.encrypt(data: data) {
+					MediaUpload.video(message.objectId, data: encrypted) { error in
 						completion(error)
-					})
-				} else { completion(NSError.description("Media encryption error.", code: 101)) }
-			} else { completion(NSError.description("Media file error.", code: 102)) }
-		} else { completion(NSError.description("Missing media file.", code: 103)) }
+					}
+				} else { completion(NSError("Media encryption error.", 101)) }
+			} else { completion(NSError("Media file error.", 102)) }
+		} else { completion(NSError("Missing media file.", 103)) }
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func uploadAudio(message: Message, completion: @escaping (_ error: Error?) -> Void) {
 
-		if let path = MediaDownload.pathAudio(message.objectId) {
-			if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-				if let crypted = Cryptor.encrypt(data: data, chatId: message.chatId) {
-					MediaUpload.audio(message.objectId, data: crypted, completion: { error in
+		if let path = Media.pathAudio(message.objectId) {
+			if let data = Data(path: path) {
+				if let encrypted = Cryptor.encrypt(data: data) {
+					MediaUpload.audio(message.objectId, data: encrypted) { error in
 						completion(error)
-					})
-				} else { completion(NSError.description("Media encryption error.", code: 101)) }
-			} else { completion(NSError.description("Media file error.", code: 102)) }
-		} else { completion(NSError.description("Missing media file.", code: 103)) }
+					}
+				} else { completion(NSError("Media encryption error.", 101)) }
+			} else { completion(NSError("Media file error.", 102)) }
+		} else { completion(NSError("Missing media file.", 103)) }
 	}
 }

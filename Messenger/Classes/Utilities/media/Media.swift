@@ -12,16 +12,91 @@
 import Foundation
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class MediaManager: NSObject {
+class Media: NSObject {
 
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func pathUser(_ name: String) -> String?	{ return path(dir: "user", name: name, ext: "jpg")	}
+	class func pathPhoto(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "jpg")	}
+	class func pathVideo(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "mp4")	}
+	class func pathAudio(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "m4a")	}
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func path(dir: String, name: String, ext: String) -> String? {
+
+		let file = "\(name).\(ext)"
+		let path = Dir.document(dir, and: file)
+
+		return File.exist(path: path) ? path : nil
+	}
+
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func pathPhoto(_ name: String) -> String	{ return path(dir: "media", name: name, ext: "jpg")	}
+	class func pathVideo(_ name: String) -> String	{ return path(dir: "media", name: name, ext: "mp4")	}
+	class func pathAudio(_ name: String) -> String	{ return path(dir: "media", name: name, ext: "m4a")	}
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func path(dir: String, name: String, ext: String) -> String {
+
+		let file = "\(name).\(ext)"
+		return Dir.document(dir, and: file)
+	}
+
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func clearManualPhoto(_ name: String) { clearManual(dir: "media", name: name, ext: "jpg") }
+	class func clearManualVideo(_ name: String) { clearManual(dir: "media", name: name, ext: "mp4") }
+	class func clearManualAudio(_ name: String) { clearManual(dir: "media", name: name, ext: "m4a") }
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func clearManual(dir: String, name: String, ext: String) {
+
+		let file = "\(name).\(ext)"
+
+		let fileManual = file + ".manual"
+		let pathManual = Dir.document(dir, and: fileManual)
+
+		let fileLoading = file + ".loading"
+		let pathLoading = Dir.document(dir, and: fileLoading)
+
+		File.remove(path: pathManual)
+		File.remove(path: pathLoading)
+	}
+
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func saveUser(_ name: String, data: Data)		{ save(data: data, dir: "user", name: name, ext: "jpg", manual: false, encrypt: true)	}
+	class func savePhoto(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "jpg", manual: true, encrypt: true)	}
+	class func saveVideo(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "mp4", manual: true, encrypt: false)	}
+	class func saveAudio(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "m4a", manual: true, encrypt: false)	}
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func save(data: Data, dir: String, name: String, ext: String, manual: Bool, encrypt: Bool) {
+
+		let file = "\(name).\(ext)"
+		let path = Dir.document(dir, and: file)
+
+		if (encrypt) {
+			if let encrypted = Cryptor.encrypt(data: data) {
+				encrypted.write(path: path, options: .atomic)
+			}
+		} else {
+			data.write(path: path, options: .atomic)
+		}
+
+		if (manual) {
+			let fileManual = file + ".manual"
+			let pathManual = Dir.document(dir, and: fileManual)
+			try? "manual".write(toFile: pathManual, atomically: false, encoding: .utf8)
+		}
+	}
+
+	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func cleanupExpired() {
 
 		if (AuthUser.userId() != "") {
-			if (Persons.keepMedia() == KEEPMEDIA_WEEK) {
+			if (Persons.keepMedia() == KeepMedia.Week) {
 				cleanupExpired(days: 7)
 			}
-			if (Persons.keepMedia() == KEEPMEDIA_MONTH) {
+			if (Persons.keepMedia() == KeepMedia.Month) {
 				cleanupExpired(days: 30)
 			}
 		}
@@ -109,6 +184,7 @@ class MediaManager: NSObject {
 		}
 	}
 
+	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func total() -> Int64 {
 

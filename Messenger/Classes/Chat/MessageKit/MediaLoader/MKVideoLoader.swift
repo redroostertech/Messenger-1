@@ -17,7 +17,7 @@ class MKVideoLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func start(_ mkmessage: MKMessage, in messagesCollectionView: MessagesCollectionView) {
 
-		if let path = MediaDownload.pathVideo(mkmessage.messageId) {
+		if let path = Media.pathVideo(mkmessage.messageId) {
 			showMedia(mkmessage, path: path)
 		} else {
 			loadMedia(mkmessage, in: messagesCollectionView)
@@ -27,7 +27,7 @@ class MKVideoLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func manual(_ mkmessage: MKMessage, in messagesCollectionView: MessagesCollectionView) {
 
-		MediaDownload.clearManualVideo(mkmessage.messageId)
+		Media.clearManualVideo(mkmessage.messageId)
 		downloadMedia(mkmessage, in: messagesCollectionView)
 		messagesCollectionView.reloadData()
 	}
@@ -37,8 +37,8 @@ class MKVideoLoader: NSObject {
 
 		let network = Persons.networkVideo()
 
-		if (network == NETWORK_MANUAL) || ((network == NETWORK_WIFI) && (Connectivity.isReachableViaWiFi() == false)) {
-			mkmessage.mediaStatus = MEDIASTATUS_MANUAL
+		if (network == Network.Manual) || ((network == Network.WiFi) && (Connectivity.isReachableViaWiFi() == false)) {
+			mkmessage.mediaStatus = MediaStatus.Manual
 		} else {
 			downloadMedia(mkmessage, in: messagesCollectionView)
 		}
@@ -47,14 +47,14 @@ class MKVideoLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private class func downloadMedia(_ mkmessage: MKMessage, in messagesCollectionView: MessagesCollectionView) {
 
-		mkmessage.mediaStatus = MEDIASTATUS_LOADING
+		mkmessage.mediaStatus = MediaStatus.Loading
 
-		MediaDownload.startVideo(mkmessage.messageId) { path, error in
+		MediaDownload.video(mkmessage.messageId) { path, error in
 			if (error == nil) {
-				Cryptor.decrypt(path: path, chatId: mkmessage.chatId)
+				Cryptor.decrypt(path: path)
 				showMedia(mkmessage, path: path)
 			} else {
-				mkmessage.mediaStatus = MEDIASTATUS_MANUAL
+				mkmessage.mediaStatus = MediaStatus.Manual
 			}
 			messagesCollectionView.reloadData()
 		}
@@ -67,6 +67,6 @@ class MKVideoLoader: NSObject {
 
 		mkmessage.videoItem?.url = URL(fileURLWithPath: path)
 		mkmessage.videoItem?.image = thumbnail.square(to: 320)
-		mkmessage.mediaStatus = MEDIASTATUS_SUCCEED
+		mkmessage.mediaStatus = MediaStatus.Succeed
 	}
 }

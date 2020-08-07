@@ -15,15 +15,14 @@ import Foundation
 extension Date {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func timestamp() -> Int64 {
+	func timestamp() -> Int {
 
-		return Int64(self.timeIntervalSince1970 * 1000)
+		return Int(self.timeIntervalSince1970)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	static func date(timestamp: Int64) -> Date {
+	static func date(timestamp: Int) -> Date {
 
-		let interval = TimeInterval(TimeInterval(timestamp) / 1000)
-		return Date(timeIntervalSince1970: interval)
+		return Date(timeIntervalSince1970: TimeInterval(timestamp))
 	}
 }

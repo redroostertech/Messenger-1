@@ -27,11 +27,11 @@ class Messages: NSObject {
 		message.userInitials = Persons.initials()
 		message.userPictureAt = Persons.pictureAt()
 
-		if (text != nil)		{ sendMessageText(message: message, text: text!)		}
-		else if (photo != nil)	{ sendMessagePhoto(message: message, photo: photo!)		}
-		else if (video != nil)	{ sendMessageVideo(message: message, video: video!)		}
-		else if (audio != nil)	{ sendMessageAudio(message: message, audio: audio!)		}
-		else					{ sendMessageLoaction(message: message)					}
+		if let text = text			{ sendMessageText(message: message, text: text)		}
+		else if let photo = photo	{ sendMessagePhoto(message: message, photo: photo)	}
+		else if let video = video	{ sendMessageVideo(message: message, video: video)	}
+		else if let audio = audio	{ sendMessageAudio(message: message, audio: audio)	}
+		else						{ sendMessageLoaction(message: message)				}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -72,11 +72,10 @@ class Messages: NSObject {
 
 		message.isMediaQueued = true
 
-		if let path = MediaDownload.pathPhoto(source.objectId) {
-			if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-				MediaDownload.savePhoto(message.objectId, data: data)
-				createMessage(message: message)
-			}
+		if let pathSource = Media.pathPhoto(source.objectId) {
+			let pathMessage: String = Media.pathPhoto(message.objectId)
+			File.copy(src: pathSource, dest: pathMessage, overwrite: true)
+			createMessage(message: message)
 		} else {
 			ProgressHUD.showError("Missing media file.")
 		}
@@ -87,11 +86,10 @@ class Messages: NSObject {
 
 		message.isMediaQueued = true
 
-		if let path = MediaDownload.pathVideo(source.objectId) {
-			if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-				MediaDownload.saveVideo(message.objectId, data: data)
-				createMessage(message: message)
-			}
+		if let pathSource = Media.pathVideo(source.objectId) {
+			let pathMessage: String = Media.pathVideo(message.objectId)
+			File.copy(src: pathSource, dest: pathMessage, overwrite: true)
+			createMessage(message: message)
 		} else {
 			ProgressHUD.showError("Missing media file.")
 		}
@@ -102,11 +100,10 @@ class Messages: NSObject {
 
 		message.isMediaQueued = true
 
-		if let path = MediaDownload.pathAudio(source.objectId) {
-			if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-				MediaDownload.saveAudio(message.objectId, data: data)
-				createMessage(message: message)
-			}
+		if let pathSource = Media.pathAudio(source.objectId) {
+			let pathMessage: String = Media.pathAudio(message.objectId)
+			File.copy(src: pathSource, dest: pathMessage, overwrite: true)
+			createMessage(message: message)
 		} else {
 			ProgressHUD.showError("Missing media file.")
 		}
@@ -133,7 +130,7 @@ class Messages: NSObject {
 		message.isMediaQueued = true
 
 		if let data = photo.jpegData(compressionQuality: 0.6) {
-			MediaDownload.savePhoto(message.objectId, data: data)
+			Media.savePhoto(message.objectId, data: data)
 			createMessage(message: message)
 		} else {
 			ProgressHUD.showError("Photo data error.")
@@ -149,8 +146,8 @@ class Messages: NSObject {
 		message.videoDuration = Video.duration(path: video.path)
 		message.isMediaQueued = true
 
-		if let data = try? Data(contentsOf: video) {
-			MediaDownload.saveVideo(message.objectId, data: data)
+		if let data = Data(path: video.path) {
+			Media.saveVideo(message.objectId, data: data)
 			createMessage(message: message)
 		} else {
 			ProgressHUD.showError("Video data error.")
@@ -166,8 +163,8 @@ class Messages: NSObject {
 		message.audioDuration = Audio.duration(path: audio)
 		message.isMediaQueued = true
 
-		if let data = try? Data(contentsOf: URL(fileURLWithPath: audio)) {
-			MediaDownload.saveAudio(message.objectId, data: data)
+		if let data = Data(path: audio) {
+			Media.saveAudio(message.objectId, data: data)
 			createMessage(message: message)
 		} else {
 			ProgressHUD.showError("Audio data error.")

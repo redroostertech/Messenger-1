@@ -21,7 +21,7 @@ class RCMessage: NSObject {
 	var userId: String = ""
 	var userFullname: String = ""
 	var userInitials: String = ""
-	var userPictureAt: Int64 = 0
+	var userPictureAt: Int = 0
 
 	var type: String = ""
 	var text: String = ""
@@ -37,7 +37,7 @@ class RCMessage: NSObject {
 	var isMediaQueued = false
 	var isMediaFailed = false
 
-	var createdAt: Int64 = 0
+	var createdAt: Int = 0
 
 	var incoming: Bool = false
 	var outgoing: Bool = false
@@ -49,8 +49,8 @@ class RCMessage: NSObject {
 	var videoThumbnail: UIImage?
 	var locationThumbnail: UIImage?
 
-	var audioStatus: Int32 = AUDIOSTATUS_STOPPED
-	var mediaStatus: Int32 = MEDIASTATUS_UNKNOWN
+	var audioStatus: Int = AudioStatus.Stopped
+	var mediaStatus: Int = MediaStatus.Unknown
 
 	// MARK: - Initialization methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------

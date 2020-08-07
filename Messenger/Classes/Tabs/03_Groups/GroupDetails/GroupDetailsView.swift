@@ -179,18 +179,18 @@ class GroupDetailsView: UIViewController {
 		let alert = UIAlertController(title: "Rename Group", message: "Enter a new name for this Group", preferredStyle: .alert)
 
 		alert.addTextField(configurationHandler: { textField in
-			textField.text = self.group.name
+			textField.autocapitalizationType = .words
 			textField.placeholder = "Group name"
+			textField.text = self.group.name
 		})
 
 		alert.addAction(UIAlertAction(title: "Save", style: .default) { action in
-			let textField = alert.textFields![0]
-			if let text = textField.text {
-				if (text.count != 0) {
-					self.group.update(name: text)
-					self.labelName.text = text
-				} else {
-					ProgressHUD.showError("Group name must be specified.")
+			if let textField = alert.textFields?[0] {
+				if let text = textField.text {
+					if (text.count != 0) {
+						self.group.update(name: text)
+						self.labelName.text = text
+					}
 				}
 			}
 		})

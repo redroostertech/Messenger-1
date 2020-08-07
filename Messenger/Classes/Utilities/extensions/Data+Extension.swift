@@ -12,12 +12,17 @@
 import Foundation
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class Password: NSObject {
+extension Data {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func get() -> String {
+	init?(path: String) {
 
-		let temp = "This is where you can generate your very special password."
-		return temp.sha256()
+		try? self.init(contentsOf: URL(fileURLWithPath: path))
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	func write(path: String, options: Data.WritingOptions = []) {
+
+		try? self.write(to: URL(fileURLWithPath: path), options: options)
 	}
 }

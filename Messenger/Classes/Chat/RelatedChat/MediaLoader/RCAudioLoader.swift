@@ -17,7 +17,7 @@ class RCAudioLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func start(_ rcmessage: RCMessage, in tableView: UITableView) {
 
-		if let path = MediaDownload.pathAudio(rcmessage.messageId) {
+		if let path = Media.pathAudio(rcmessage.messageId) {
 			showMedia(rcmessage, path: path)
 		} else {
 			loadMedia(rcmessage, in: tableView)
@@ -27,7 +27,7 @@ class RCAudioLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func manual(_ rcmessage: RCMessage, in tableView: UITableView) {
 
-		MediaDownload.clearManualAudio(rcmessage.messageId)
+		Media.clearManualAudio(rcmessage.messageId)
 		downloadMedia(rcmessage, in: tableView)
 		tableView.reloadData()
 	}
@@ -37,8 +37,8 @@ class RCAudioLoader: NSObject {
 
 		let network = Persons.networkAudio()
 
-		if (network == NETWORK_MANUAL) || ((network == NETWORK_WIFI) && (Connectivity.isReachableViaWiFi() == false)) {
-			rcmessage.mediaStatus = MEDIASTATUS_MANUAL
+		if (network == Network.Manual) || ((network == Network.WiFi) && (Connectivity.isReachableViaWiFi() == false)) {
+			rcmessage.mediaStatus = MediaStatus.Manual
 		} else {
 			downloadMedia(rcmessage, in: tableView)
 		}
@@ -47,14 +47,14 @@ class RCAudioLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private class func downloadMedia(_ rcmessage: RCMessage, in tableView: UITableView) {
 
-		rcmessage.mediaStatus = MEDIASTATUS_LOADING
+		rcmessage.mediaStatus = MediaStatus.Loading
 
-		MediaDownload.startAudio(rcmessage.messageId) { path, error in
+		MediaDownload.audio(rcmessage.messageId) { path, error in
 			if (error == nil) {
-				Cryptor.decrypt(path: path, chatId: rcmessage.chatId)
+				Cryptor.decrypt(path: path)
 				showMedia(rcmessage, path: path)
 			} else {
-				rcmessage.mediaStatus = MEDIASTATUS_MANUAL
+				rcmessage.mediaStatus = MediaStatus.Manual
 			}
 			tableView.reloadData()
 		}
@@ -64,6 +64,6 @@ class RCAudioLoader: NSObject {
 	private class func showMedia(_ rcmessage: RCMessage, path: String) {
 
 		rcmessage.audioPath = path
-		rcmessage.mediaStatus = MEDIASTATUS_SUCCEED
+		rcmessage.mediaStatus = MediaStatus.Succeed
 	}
 }

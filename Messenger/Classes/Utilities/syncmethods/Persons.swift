@@ -27,19 +27,6 @@ class Persons: NSObject {
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func create(_ objectId: String, phone: String) {
-
-		let realm = try! Realm()
-		try! realm.safeWrite {
-			let person = Person()
-			person.objectId = objectId
-			person.phone = phone
-			person.loginMethod = LOGIN_PHONE
-			realm.add(person, update: .modified)
-		}
-	}
-
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func fullname() -> String {
@@ -56,7 +43,7 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func pictureAt() -> Int64 {
+	class func pictureAt() -> Int {
 
 		let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId())
 		return person?.pictureAt ?? 0
@@ -70,31 +57,31 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func keepMedia() -> Int32 {
+	class func keepMedia() -> Int {
 
 		let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId())
-		return person?.keepMedia ?? KEEPMEDIA_FOREVER
+		return person?.keepMedia ?? KeepMedia.Forever
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func networkPhoto() -> Int32 {
+	class func networkPhoto() -> Int {
 
 		let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId())
-		return person?.networkPhoto ?? NETWORK_ALL
+		return person?.networkPhoto ?? Network.All
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func networkVideo() -> Int32 {
+	class func networkVideo() -> Int {
 
 		let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId())
-		return person?.networkVideo ?? NETWORK_ALL
+		return person?.networkVideo ?? Network.All
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func networkAudio() -> Int32 {
+	class func networkAudio() -> Int {
 
 		let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId())
-		return person?.networkAudio ?? NETWORK_ALL
+		return person?.networkAudio ?? Network.All
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -121,7 +108,7 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func update(keepMedia: Int32) {
+	class func update(keepMedia: Int) {
 
 		if let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId()) {
 			person.update(keepMedia: keepMedia)
@@ -129,7 +116,7 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func update(networkPhoto: Int32) {
+	class func update(networkPhoto: Int) {
 
 		if let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId()) {
 			person.update(networkPhoto: networkPhoto)
@@ -137,7 +124,7 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func update(networkVideo: Int32) {
+	class func update(networkVideo: Int) {
 
 		if let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId()) {
 			person.update(networkVideo: networkVideo)
@@ -145,7 +132,7 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func update(networkAudio: Int32) {
+	class func update(networkAudio: Int) {
 
 		if let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId()) {
 			person.update(networkAudio: networkAudio)
@@ -169,7 +156,7 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func update(lastActive: Int64) {
+	class func update(lastActive: Int) {
 
 		if let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId()) {
 			person.update(lastActive: lastActive)
@@ -177,7 +164,7 @@ class Persons: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func update(lastTerminate: Int64) {
+	class func update(lastTerminate: Int) {
 
 		if let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId()) {
 			person.update(lastTerminate: lastTerminate)

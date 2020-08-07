@@ -23,7 +23,7 @@ class RCLocationLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private class func loadMedia(_ rcmessage: RCMessage, in tableView: UITableView) {
 
-		rcmessage.mediaStatus = MEDIASTATUS_LOADING
+		rcmessage.mediaStatus = MediaStatus.Loading
 
 		var region: MKCoordinateRegion = MKCoordinateRegion()
 		region.center.latitude = rcmessage.latitude
@@ -62,6 +62,6 @@ class RCLocationLoader: NSObject {
 		}
 		UIGraphicsEndImageContext()
 
-		rcmessage.mediaStatus = MEDIASTATUS_SUCCEED
+		rcmessage.mediaStatus = MediaStatus.Succeed
 	}
 }

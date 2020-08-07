@@ -23,6 +23,20 @@ class VideoView: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 
 		self.url = url
+
+		self.isModalInPresentation = true
+		self.modalPresentationStyle = .fullScreen
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	init(path: String) {
+
+		super.init(nibName: nil, bundle: nil)
+
+		self.url = URL(fileURLWithPath: path)
+
+		self.isModalInPresentation = true
+		self.modalPresentationStyle = .fullScreen
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------

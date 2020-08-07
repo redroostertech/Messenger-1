@@ -22,24 +22,24 @@ class Person: SyncObject {
 	@objc dynamic var fullname = ""
 	@objc dynamic var country = ""
 	@objc dynamic var location = ""
-	@objc dynamic var pictureAt: Int64 = 0
+	@objc dynamic var pictureAt: Int = 0
 
 	@objc dynamic var status = "Available"
 
-	@objc dynamic var keepMedia: Int32 = KEEPMEDIA_FOREVER
-	@objc dynamic var networkPhoto: Int32 = NETWORK_ALL
-	@objc dynamic var networkVideo: Int32 = NETWORK_ALL
-	@objc dynamic var networkAudio: Int32 = NETWORK_ALL
+	@objc dynamic var keepMedia: Int = KeepMedia.Forever
+	@objc dynamic var networkPhoto: Int = Network.All
+	@objc dynamic var networkVideo: Int = Network.All
+	@objc dynamic var networkAudio: Int = Network.All
 
 	@objc dynamic var wallpaper = ""
 	@objc dynamic var loginMethod = ""
 	@objc dynamic var oneSignalId = ""
 
-	@objc dynamic var lastActive: Int64 = 0
-	@objc dynamic var lastTerminate: Int64 = 0
+	@objc dynamic var lastActive: Int = 0
+	@objc dynamic var lastTerminate: Int = 0
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func lastUpdatedAt() -> Int64 {
+	class func lastUpdatedAt() -> Int {
 
 		let realm = try! Realm()
 		let predicate = NSPredicate(format: "objectId != %@", AuthUser.userId())
@@ -74,7 +74,7 @@ class Person: SyncObject {
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(pictureAt value: Int64) {
+	func update(pictureAt value: Int) {
 
 		if (pictureAt == value) { return }
 
@@ -100,7 +100,7 @@ class Person: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(keepMedia value: Int32) {
+	func update(keepMedia value: Int) {
 
 		if (keepMedia == value) { return }
 
@@ -113,7 +113,7 @@ class Person: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(networkPhoto value: Int32) {
+	func update(networkPhoto value: Int) {
 
 		if (networkPhoto == value) { return }
 
@@ -126,7 +126,7 @@ class Person: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(networkVideo value: Int32) {
+	func update(networkVideo value: Int) {
 
 		if (networkVideo == value) { return }
 
@@ -139,7 +139,7 @@ class Person: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(networkAudio value: Int32) {
+	func update(networkAudio value: Int) {
 
 		if (networkAudio == value) { return }
 
@@ -178,7 +178,7 @@ class Person: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(lastActive value: Int64) {
+	func update(lastActive value: Int) {
 
 		if (lastActive == value) { return }
 
@@ -191,7 +191,7 @@ class Person: SyncObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func update(lastTerminate value: Int64) {
+	func update(lastTerminate value: Int) {
 
 		if (lastTerminate == value) { return }
 

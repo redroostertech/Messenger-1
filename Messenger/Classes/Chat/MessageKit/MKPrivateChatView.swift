@@ -34,7 +34,7 @@ class MKPrivateChatView: MessagesViewController {
 	private var messageToDisplay: Int = 12
 
 	private var typingCounter: Int = 0
-	private var lastRead: Int64 = 0
+	private var lastRead: Int = 0
 
 	let currentUser = MKSender(senderId: AuthUser.userId(), displayName: Persons.fullname())
 
@@ -241,7 +241,7 @@ class MKPrivateChatView: MessagesViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func loadMedia(_ mkmessage: MKMessage) {
 
-		if (mkmessage.mediaStatus != MEDIASTATUS_UNKNOWN) { return }
+		if (mkmessage.mediaStatus != MediaStatus.Unknown) { return }
 		if (mkmessage.incoming) && (mkmessage.isMediaQueued) { return }
 		if (mkmessage.incoming) && (mkmessage.isMediaFailed) { return }
 
@@ -303,7 +303,7 @@ class MKPrivateChatView: MessagesViewController {
 	func scrollToBottomIfVisible() {
 
 		if (messageLoadedCount() != 0) {
-			let indexPath = IndexPath(item: 0, section: Int(messageLoadedCount()-1))
+			let indexPath = IndexPath(item: 0, section: messageLoadedCount()-1)
 			if (messagesCollectionView.indexPathsForVisibleItems.contains(indexPath)) {
 				self.messagesCollectionView.scrollToBottom(animated: true)
 			}
@@ -610,20 +610,20 @@ extension MKPrivateChatView: MessageCellDelegate {
 			let mkmessage = mkmessageAt(indexPath)
 
 			if (mkmessage.type == MESSAGE_PHOTO) {
-				if (mkmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+				if (mkmessage.mediaStatus == MediaStatus.Manual) {
 					MKPhotoLoader.manual(mkmessage, in: messagesCollectionView)
 				}
-				if (mkmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+				if (mkmessage.mediaStatus == MediaStatus.Succeed) {
 					let pictureView = PictureView(chatId: chatId, messageId: mkmessage.messageId)
 					present(pictureView, animated: true)
 				}
 			}
 
 			if (mkmessage.type == MESSAGE_VIDEO) {
-				if (mkmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+				if (mkmessage.mediaStatus == MediaStatus.Manual) {
 					MKVideoLoader.manual(mkmessage, in: messagesCollectionView)
 				}
-				if (mkmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+				if (mkmessage.mediaStatus == MediaStatus.Succeed) {
 					if let videoItem = mkmessage.videoItem {
 						if let url = videoItem.url {
 							let videoView = VideoView(url: url)
@@ -642,7 +642,7 @@ extension MKPrivateChatView: MessageCellDelegate {
 			let mkmessage = mkmessageAt(indexPath)
 
 			if (mkmessage.type == MESSAGE_AUDIO) {
-				if (mkmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+				if (mkmessage.mediaStatus == MediaStatus.Manual) {
 					MKAudioLoader.manual(mkmessage, in: messagesCollectionView)
 				}
 			}
@@ -662,7 +662,7 @@ extension MKPrivateChatView: MessageCellDelegate {
 
 		if let indexPath = messagesCollectionView.indexPath(for: cell) {
 			let mkmessage = mkmessageAt(indexPath)
-			if (mkmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+			if (mkmessage.mediaStatus == MediaStatus.Succeed) {
 				audioController.toggleSound(for: mkmessage, in: cell)
 			}
 		}
@@ -716,14 +716,14 @@ extension MKPrivateChatView: MessagesDisplayDelegate {
 		var imageAvatar = avatarImages[mkmessage.userId]
 
 		if (imageAvatar == nil) {
-			if let path = MediaDownload.pathUser(mkmessage.userId) {
+			if let path = Media.pathUser(mkmessage.userId) {
 				imageAvatar = UIImage.image(path, size: 30)
 				avatarImages[mkmessage.userId] = imageAvatar
 			}
 		}
 
 		if (imageAvatar == nil) {
-			MediaDownload.startUser(mkmessage.userId, pictureAt: mkmessage.userPictureAt) { image, error in
+			MediaDownload.user(mkmessage.userId, pictureAt: mkmessage.userPictureAt) { image, error in
 				if (error == nil) {
 					self.refreshCollectionView()
 				}
@@ -792,17 +792,17 @@ extension MKPrivateChatView: MessagesDisplayDelegate {
 
 		let color = isFromCurrentSender(message: mkmessage) ? MKDefaults.bubbleColorOutgoing : MKDefaults.bubbleColorIncoming
 
-		if (mkmessage.mediaStatus == MEDIASTATUS_LOADING) {
+		if (mkmessage.mediaStatus == MediaStatus.Loading) {
 			messageContainerView.showOverlayView(color)
 			messageContainerView.showActivityIndicator()
 			messageContainerView.hideManualDownloadIcon()
 		}
-		if (mkmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+		if (mkmessage.mediaStatus == MediaStatus.Manual) {
 			messageContainerView.showOverlayView(color)
 			messageContainerView.hideActivityIndicator()
 			messageContainerView.showManualDownloadIcon()
 		}
-		if (mkmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+		if (mkmessage.mediaStatus == MediaStatus.Succeed) {
 			messageContainerView.hideOverlayView()
 			messageContainerView.hideActivityIndicator()
 			messageContainerView.hideManualDownloadIcon()

@@ -10,7 +10,6 @@
 // THE SOFTWARE.
 
 import RealmSwift
-import CryptoSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class Singles: NSObject {
@@ -62,6 +61,6 @@ class Singles: NSObject {
 		let sorted = userIds.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
 		let joined = sorted.joined(separator: "")
 
-		return joined.md5()
+		return joined.sha1()
 	}
 }

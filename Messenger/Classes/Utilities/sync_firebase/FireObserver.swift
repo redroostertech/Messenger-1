@@ -43,36 +43,6 @@ class FireObserver: NSObject {
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	init(_ query: Query, to type: SyncObject.Type, refreshCallback: @escaping (_ insert: Bool, _ modify: Bool) -> Void) {
-
-		super.init()
-
-		self.query = query
-		self.type = type
-
-		listener = query.addSnapshotListener { querySnapshot, error in
-			if let snapshot = querySnapshot {
-				DispatchQueue.main.async(after: 0.1) {
-					var insert = false
-					var modify = false
-
-					let realm = try! Realm()
-					try! realm.safeWrite {
-						for documentChange in snapshot.documentChanges {
-							if (documentChange.type == .added) { insert = true }
-							if (documentChange.type == .modified) { modify = true }
-							let data = documentChange.document.data()
-							self.updateRealm(realm, data)
-						}
-					}
-
-					refreshCallback(insert, modify)
-				}
-			}
-		}
-	}
-
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func removeObserver() {
@@ -90,23 +60,14 @@ class FireObserver: NSObject {
 		temp["neverSynced"] = false
 		temp["syncRequired"] = false
 
-		realm.create(type, value: temp, update: .modified)
-	}
-
-	// MARK: -
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func printDetails(_ text: String, _ snapshot: QuerySnapshot) {
-
-		var delete = "", insert = "", modify = ""
-
-		for documentChange in snapshot.documentChanges {
-			if (documentChange.type == .removed)	{ delete = "delete" }
-			if (documentChange.type == .added)		{ insert = "insert" }
-			if (documentChange.type == .modified)	{ modify = "modify" }
+		for property in type.encryptedProperties() {
+			if let value = temp[property] as? String {
+				if let decrypted = Cryptor.decrypt(text: value) {
+					temp[property] = decrypted
+				}
+			}
 		}
 
-		let source = snapshot.metadata.isFromCache ? "local" : "server"
-
-		print("\(text): \(type.description()) \(snapshot.documentChanges.count) \(source) - \(delete)\(insert)\(modify)")
+		realm.create(type, value: temp, update: .modified)
 	}
 }

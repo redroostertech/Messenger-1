@@ -17,7 +17,7 @@ class MKAudioLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func start(_ mkmessage: MKMessage, in messagesCollectionView: MessagesCollectionView) {
 
-		if let path = MediaDownload.pathAudio(mkmessage.messageId) {
+		if let path = Media.pathAudio(mkmessage.messageId) {
 			showMedia(mkmessage, path: path)
 		} else {
 			loadMedia(mkmessage, in: messagesCollectionView)
@@ -27,7 +27,7 @@ class MKAudioLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func manual(_ mkmessage: MKMessage, in messagesCollectionView: MessagesCollectionView) {
 
-		MediaDownload.clearManualAudio(mkmessage.messageId)
+		Media.clearManualAudio(mkmessage.messageId)
 		downloadMedia(mkmessage, in: messagesCollectionView)
 		messagesCollectionView.reloadData()
 	}
@@ -37,8 +37,8 @@ class MKAudioLoader: NSObject {
 
 		let network = Persons.networkAudio()
 
-		if (network == NETWORK_MANUAL) || ((network == NETWORK_WIFI) && (Connectivity.isReachableViaWiFi() == false)) {
-			mkmessage.mediaStatus = MEDIASTATUS_MANUAL
+		if (network == Network.Manual) || ((network == Network.WiFi) && (Connectivity.isReachableViaWiFi() == false)) {
+			mkmessage.mediaStatus = MediaStatus.Manual
 		} else {
 			downloadMedia(mkmessage, in: messagesCollectionView)
 		}
@@ -47,14 +47,14 @@ class MKAudioLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private class func downloadMedia(_ mkmessage: MKMessage, in messagesCollectionView: MessagesCollectionView) {
 
-		mkmessage.mediaStatus = MEDIASTATUS_LOADING
+		mkmessage.mediaStatus = MediaStatus.Loading
 
-		MediaDownload.startAudio(mkmessage.messageId) { path, error in
+		MediaDownload.audio(mkmessage.messageId) { path, error in
 			if (error == nil) {
-				Cryptor.decrypt(path: path, chatId: mkmessage.chatId)
+				Cryptor.decrypt(path: path)
 				showMedia(mkmessage, path: path)
 			} else {
-				mkmessage.mediaStatus = MEDIASTATUS_MANUAL
+				mkmessage.mediaStatus = MediaStatus.Manual
 			}
 			messagesCollectionView.reloadData()
 		}
@@ -64,6 +64,6 @@ class MKAudioLoader: NSObject {
 	private class func showMedia(_ mkmessage: MKMessage, path: String) {
 
 		mkmessage.audioItem?.url = URL(fileURLWithPath: path)
-		mkmessage.mediaStatus = MEDIASTATUS_SUCCEED
+		mkmessage.mediaStatus = MediaStatus.Succeed
 	}
 }

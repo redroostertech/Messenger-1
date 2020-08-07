@@ -35,7 +35,7 @@ class AllMediaCell: UICollectionViewCell {
 
 		imageVideo.isHidden = true
 
-		if let path = MediaDownload.pathPhoto(message.objectId) {
+		if let path = Media.pathPhoto(message.objectId) {
 			imageItem.image = UIImage.image(path, size: 160)
 		}
 	}
@@ -45,7 +45,7 @@ class AllMediaCell: UICollectionViewCell {
 
 		imageVideo.isHidden = false
 
-		if let path = MediaDownload.pathVideo(message.objectId) {
+		if let path = Media.pathVideo(message.objectId) {
 			DispatchQueue(label: "bindVideo").async {
 				let thumbnail = Video.thumbnail(path: path)
 				DispatchQueue.main.async {

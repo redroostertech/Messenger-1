@@ -78,7 +78,7 @@ class SettingsView: UITableViewController {
 		guard let person = realm.object(ofType: Person.self, forPrimaryKey: AuthUser.userId()) else { return }
 
 		labelInitials.text = person.initials()
-		MediaDownload.startUser(person.objectId, pictureAt: person.pictureAt) { image, error in
+		MediaDownload.user(person.objectId, pictureAt: person.pictureAt) { image, error in
 			if (error == nil) {
 				self.imageUser.image = image?.square(to: 70)
 				self.labelInitials.text = nil
@@ -197,7 +197,7 @@ class SettingsView: UITableViewController {
 		DispatchQueue.main.async(after: 1.0) {
 			Users.performLogout()
 			ProgressHUD.dismiss()
-			self.tabBarController?.selectedIndex = Int(DEFAULT_TAB)
+			self.tabBarController?.selectedIndex = App.DefaultTab
 		}
 	}
 

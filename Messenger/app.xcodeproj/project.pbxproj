@@ -26,10 +26,12 @@
 		29181BB3239AEE9900062FBC /* callvideo_mute2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29181BAC239AEE9900062FBC /* callvideo_mute2@2x.png */; };
 		29181BB4239AEE9900062FBC /* callvideo_mute1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29181BAD239AEE9900062FBC /* callvideo_mute1@2x.png */; };
 		29181BB5239AEE9900062FBC /* callvideo_hangup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29181BAE239AEE9900062FBC /* callvideo_hangup@2x.png */; };
+		2920670124842CCE00F95244 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2920670024842CCE00F95244 /* Data+Extension.swift */; };
 		2920B1882030AD3500DB6E07 /* AudioView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2920B1822030AD3500DB6E07 /* AudioView.xib */; };
 		2920B18B2030AD3500DB6E07 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2920B1872030AD3500DB6E07 /* AudioView.swift */; };
 		29226C8C23D7885C00AA9CE9 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29226C8B23D7885C00AA9CE9 /* Person.swift */; };
 		29226C8E23D7A58000AA9CE9 /* Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29226C8D23D7A58000AA9CE9 /* Persons.swift */; };
+		2927F6A6248282660030EB49 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2927F6A5248282660030EB49 /* String+Extension.swift */; };
 		293064DD23D5CEFE00B67C0E /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293064DC23D5CEFE00B67C0E /* Friend.swift */; };
 		293064DF23D5D30D00B67C0E /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293064DE23D5D30D00B67C0E /* Friends.swift */; };
 		2931FF1120ECDFC5002C0A97 /* PictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931FF0F20ECDFC5002C0A97 /* PictureView.swift */; };
@@ -55,7 +57,7 @@
 		295E65B2234F26830098D8B6 /* mkchat_manual@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 295E65AE234F26830098D8B6 /* mkchat_manual@2x.png */; };
 		295E65B3234F26830098D8B6 /* mkchat_attach@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 295E65AF234F26830098D8B6 /* mkchat_attach@2x.png */; };
 		295E65B4234F26830098D8B6 /* mkchat_send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 295E65B0234F26830098D8B6 /* mkchat_send@2x.png */; };
-		295E79AB23E6CB78004A154F /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295E79AA23E6CB78004A154F /* MediaManager.swift */; };
+		295E79AB23E6CB78004A154F /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295E79AA23E6CB78004A154F /* Media.swift */; };
 		2960214C1F2CF5F600544468 /* AllMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29601FF11F2CF5F600544468 /* AllMediaCell.swift */; };
 		2960214D1F2CF5F600544468 /* AllMediaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29601FF21F2CF5F600544468 /* AllMediaCell.xib */; };
 		296021501F2CF5F600544468 /* AllMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29601FF71F2CF5F600544468 /* AllMediaView.swift */; };
@@ -163,6 +165,14 @@
 		2990E66E239ADFAC008CFB9C /* CallAudioView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2990E669239ADFAC008CFB9C /* CallAudioView.xib */; };
 		2990E66F239ADFAC008CFB9C /* CallVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2990E66B239ADFAC008CFB9C /* CallVideoView.xib */; };
 		2990E670239ADFAC008CFB9C /* CallVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E66C239ADFAC008CFB9C /* CallVideoView.swift */; };
+		29962DC524DD6CE2002F7860 /* FireUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DBD24DD6CE1002F7860 /* FireUpdater.swift */; };
+		29962DC624DD6CE2002F7860 /* FireObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DBE24DD6CE1002F7860 /* FireObservers.swift */; };
+		29962DC724DD6CE2002F7860 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DBF24DD6CE2002F7860 /* AuthUser.swift */; };
+		29962DC824DD6CE2002F7860 /* FireStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DC024DD6CE2002F7860 /* FireStorage.swift */; };
+		29962DC924DD6CE2002F7860 /* FireFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DC124DD6CE2002F7860 /* FireFetch.swift */; };
+		29962DCA24DD6CE2002F7860 /* FireFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DC224DD6CE2002F7860 /* FireFetcher.swift */; };
+		29962DCB24DD6CE2002F7860 /* FireObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DC324DD6CE2002F7860 /* FireObserver.swift */; };
+		29962DCC24DD6CE2002F7860 /* FireUpdaters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29962DC424DD6CE2002F7860 /* FireUpdaters.swift */; };
 		299771F723EB706A00D11DDF /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299771F623EB706A00D11DDF /* ChatManager.swift */; };
 		299771F923EB714000D11DDF /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299771F823EB713F00D11DDF /* Chat.swift */; };
 		29A292E423462CF700684B56 /* MKPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A292DC23462CF700684B56 /* MKPrivateChatView.swift */; };
@@ -214,16 +224,9 @@
 		29BED8C3230B13DF0071C11F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BED8BB230B13DF0071C11F /* LocationManager.swift */; };
 		29BED8C4230B13DF0071C11F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BED8BC230B13DF0071C11F /* Connectivity.swift */; };
 		29BED8C6230B16B30071C11F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BED8C5230B16B30071C11F /* ImagePicker.swift */; };
+		29C68B68247ABEEF0076C7B6 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C68B67247ABEEF0076C7B6 /* AppConstant.swift */; };
 		29CAF5D123C89AEE00FA0185 /* MKGroupChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAF5D023C89AEE00FA0185 /* MKGroupChatView.swift */; };
 		29CAF5D323C8AA4600FA0185 /* RCLocationLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAF5D223C8AA4600FA0185 /* RCLocationLoader.swift */; };
-		29D1694E24431E2B00134097 /* FireFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694624431E2B00134097 /* FireFetcher.swift */; };
-		29D1694F24431E2B00134097 /* FireUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694724431E2B00134097 /* FireUpdater.swift */; };
-		29D1695024431E2B00134097 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694824431E2B00134097 /* AuthUser.swift */; };
-		29D1695124431E2B00134097 /* FireFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694924431E2B00134097 /* FireFetch.swift */; };
-		29D1695224431E2B00134097 /* FireUpdaters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694A24431E2B00134097 /* FireUpdaters.swift */; };
-		29D1695324431E2B00134097 /* FireStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694B24431E2B00134097 /* FireStorage.swift */; };
-		29D1695424431E2B00134097 /* FireObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694C24431E2B00134097 /* FireObserver.swift */; };
-		29D1695524431E2B00134097 /* FireObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D1694D24431E2B00134097 /* FireObservers.swift */; };
 		29D29EF91D9A59E4006CA074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D29EF81D9A59E4006CA074 /* AppDelegate.swift */; };
 		29D29F011D9A59E4006CA074 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29D29F001D9A59E4006CA074 /* Assets.xcassets */; };
 		29D29F041D9A59E4006CA074 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29D29F021D9A59E4006CA074 /* LaunchScreen.storyboard */; };
@@ -261,10 +264,12 @@
 		29181BAC239AEE9900062FBC /* callvideo_mute2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "callvideo_mute2@2x.png"; sourceTree = "<group>"; };
 		29181BAD239AEE9900062FBC /* callvideo_mute1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "callvideo_mute1@2x.png"; sourceTree = "<group>"; };
 		29181BAE239AEE9900062FBC /* callvideo_hangup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "callvideo_hangup@2x.png"; sourceTree = "<group>"; };
+		2920670024842CCE00F95244 /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		2920B1822030AD3500DB6E07 /* AudioView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioView.xib; sourceTree = "<group>"; };
 		2920B1872030AD3500DB6E07 /* AudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
 		29226C8B23D7885C00AA9CE9 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		29226C8D23D7A58000AA9CE9 /* Persons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persons.swift; sourceTree = "<group>"; };
+		2927F6A5248282660030EB49 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		293064DC23D5CEFE00B67C0E /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		293064DE23D5D30D00B67C0E /* Friends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		2931FF0F20ECDFC5002C0A97 /* PictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureView.swift; sourceTree = "<group>"; };
@@ -292,7 +297,7 @@
 		295E65AE234F26830098D8B6 /* mkchat_manual@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mkchat_manual@2x.png"; sourceTree = "<group>"; };
 		295E65AF234F26830098D8B6 /* mkchat_attach@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mkchat_attach@2x.png"; sourceTree = "<group>"; };
 		295E65B0234F26830098D8B6 /* mkchat_send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mkchat_send@2x.png"; sourceTree = "<group>"; };
-		295E79AA23E6CB78004A154F /* MediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
+		295E79AA23E6CB78004A154F /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		29601FF11F2CF5F600544468 /* AllMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllMediaCell.swift; sourceTree = "<group>"; };
 		29601FF21F2CF5F600544468 /* AllMediaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllMediaCell.xib; sourceTree = "<group>"; };
 		29601FF71F2CF5F600544468 /* AllMediaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllMediaView.swift; sourceTree = "<group>"; };
@@ -402,6 +407,14 @@
 		2990E669239ADFAC008CFB9C /* CallAudioView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallAudioView.xib; sourceTree = "<group>"; };
 		2990E66B239ADFAC008CFB9C /* CallVideoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallVideoView.xib; sourceTree = "<group>"; };
 		2990E66C239ADFAC008CFB9C /* CallVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallVideoView.swift; sourceTree = "<group>"; };
+		29962DBD24DD6CE1002F7860 /* FireUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireUpdater.swift; sourceTree = "<group>"; };
+		29962DBE24DD6CE1002F7860 /* FireObservers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireObservers.swift; sourceTree = "<group>"; };
+		29962DBF24DD6CE2002F7860 /* AuthUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
+		29962DC024DD6CE2002F7860 /* FireStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStorage.swift; sourceTree = "<group>"; };
+		29962DC124DD6CE2002F7860 /* FireFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireFetch.swift; sourceTree = "<group>"; };
+		29962DC224DD6CE2002F7860 /* FireFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireFetcher.swift; sourceTree = "<group>"; };
+		29962DC324DD6CE2002F7860 /* FireObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireObserver.swift; sourceTree = "<group>"; };
+		29962DC424DD6CE2002F7860 /* FireUpdaters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireUpdaters.swift; sourceTree = "<group>"; };
 		299771F623EB706A00D11DDF /* ChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		299771F823EB713F00D11DDF /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		29A292DC23462CF700684B56 /* MKPrivateChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPrivateChatView.swift; sourceTree = "<group>"; };
@@ -453,16 +466,9 @@
 		29BED8BB230B13DF0071C11F /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		29BED8BC230B13DF0071C11F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		29BED8C5230B16B30071C11F /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		29C68B67247ABEEF0076C7B6 /* AppConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		29CAF5D023C89AEE00FA0185 /* MKGroupChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKGroupChatView.swift; sourceTree = "<group>"; };
 		29CAF5D223C8AA4600FA0185 /* RCLocationLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCLocationLoader.swift; sourceTree = "<group>"; };
-		29D1694624431E2B00134097 /* FireFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireFetcher.swift; sourceTree = "<group>"; };
-		29D1694724431E2B00134097 /* FireUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireUpdater.swift; sourceTree = "<group>"; };
-		29D1694824431E2B00134097 /* AuthUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
-		29D1694924431E2B00134097 /* FireFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireFetch.swift; sourceTree = "<group>"; };
-		29D1694A24431E2B00134097 /* FireUpdaters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireUpdaters.swift; sourceTree = "<group>"; };
-		29D1694B24431E2B00134097 /* FireStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStorage.swift; sourceTree = "<group>"; };
-		29D1694C24431E2B00134097 /* FireObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireObserver.swift; sourceTree = "<group>"; };
-		29D1694D24431E2B00134097 /* FireObservers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireObservers.swift; sourceTree = "<group>"; };
 		29D29EF11D9A59E4006CA074 /* app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D29EF81D9A59E4006CA074 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29D29F001D9A59E4006CA074 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -944,7 +950,7 @@
 				2960210F1F2CF5F600544468 /* media */,
 				296021181F2CF5F600544468 /* other */,
 				299771F123EB6F8800D11DDF /* realmobjects */,
-				29D1693524431E1E00134097 /* sync_firebase */,
+				29962DAC24DD6CD2002F7860 /* sync_firebase */,
 				290C0221239BFEA300B7D9BC /* syncengine */,
 				2985440723A1303A0004E60B /* syncmethods */,
 				2985440923A1303A0004E60B /* syncobjects */,
@@ -984,8 +990,8 @@
 		2960210F1F2CF5F600544468 /* media */ = {
 			isa = PBXGroup;
 			children = (
+				295E79AA23E6CB78004A154F /* Media.swift */,
 				29B002FA23C785190092A338 /* MediaDownload.swift */,
-				295E79AA23E6CB78004A154F /* MediaManager.swift */,
 				29B002FB23C785190092A338 /* MediaUpload.swift */,
 				29A8B43F23AD2F8A0084CA30 /* MediaUploader.swift */,
 			);
@@ -1195,6 +1201,21 @@
 			path = CallVideo;
 			sourceTree = "<group>";
 		};
+		29962DAC24DD6CD2002F7860 /* sync_firebase */ = {
+			isa = PBXGroup;
+			children = (
+				29962DBF24DD6CE2002F7860 /* AuthUser.swift */,
+				29962DC124DD6CE2002F7860 /* FireFetch.swift */,
+				29962DC224DD6CE2002F7860 /* FireFetcher.swift */,
+				29962DC324DD6CE2002F7860 /* FireObserver.swift */,
+				29962DBE24DD6CE1002F7860 /* FireObservers.swift */,
+				29962DC024DD6CE2002F7860 /* FireStorage.swift */,
+				29962DBD24DD6CE1002F7860 /* FireUpdater.swift */,
+				29962DC424DD6CE2002F7860 /* FireUpdaters.swift */,
+			);
+			path = sync_firebase;
+			sourceTree = "<group>";
+		};
 		299771F123EB6F8800D11DDF /* realmobjects */ = {
 			isa = PBXGroup;
 			children = (
@@ -1325,21 +1346,6 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		29D1693524431E1E00134097 /* sync_firebase */ = {
-			isa = PBXGroup;
-			children = (
-				29D1694824431E2B00134097 /* AuthUser.swift */,
-				29D1694924431E2B00134097 /* FireFetch.swift */,
-				29D1694624431E2B00134097 /* FireFetcher.swift */,
-				29D1694C24431E2B00134097 /* FireObserver.swift */,
-				29D1694D24431E2B00134097 /* FireObservers.swift */,
-				29D1694724431E2B00134097 /* FireUpdater.swift */,
-				29D1694A24431E2B00134097 /* FireUpdaters.swift */,
-				29D1694B24431E2B00134097 /* FireStorage.swift */,
-			);
-			path = sync_firebase;
-			sourceTree = "<group>";
-		};
 		29D29EE81D9A59E4006CA074 = {
 			isa = PBXGroup;
 			children = (
@@ -1366,6 +1372,7 @@
 			children = (
 				295015181D9A5C1B00AFD8B3 /* app.entitlements */,
 				295018301D9A5CE600AFD8B3 /* AppConstant.h */,
+				29C68B67247ABEEF0076C7B6 /* AppConstant.swift */,
 				29D29EF81D9A59E4006CA074 /* AppDelegate.swift */,
 				29D29F001D9A59E4006CA074 /* Assets.xcassets */,
 				2950182E1D9A5CE000AFD8B3 /* GoogleService-Info.plist */,
@@ -1379,6 +1386,7 @@
 			isa = PBXGroup;
 			children = (
 				29E1B2F6230C07800036E3EC /* Array+Extension.swift */,
+				2920670024842CCE00F95244 /* Data+Extension.swift */,
 				29E1B2F5230C07800036E3EC /* Date+Extension.swift */,
 				29ED990C23CCA28F0036BE27 /* DispatchQueue+Extension.swift */,
 				29E1B301230C1A960036E3EC /* Error+Extension.swift */,
@@ -1386,6 +1394,7 @@
 				29E1B2F7230C07800036E3EC /* NSDictionary+Extension.swift */,
 				29E1B2F8230C07800036E3EC /* NSError+Extension.swift */,
 				2906BB5A23C9CDC6007E31AC /* Realm+Extension.swift */,
+				2927F6A5248282660030EB49 /* String+Extension.swift */,
 				2941800E23E72FEA00C94845 /* UIImage+Extension.swift */,
 				29A920762406E559000219C7 /* UIView+Extension.swift */,
 				29E1B2FF230C10A20036E3EC /* UserDefaults+Extension.swift */,
@@ -1588,10 +1597,8 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-app/Pods-app-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
@@ -1601,7 +1608,6 @@
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/RNCryptor-objc/RNCryptor_objc.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -1615,10 +1621,8 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InputBarAccessoryView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
@@ -1628,7 +1632,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNCryptor_objc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -1690,11 +1693,11 @@
 				29BED8C4230B13DF0071C11F /* Connectivity.swift in Sources */,
 				2960215C1F2CF5F600544468 /* CountriesView.swift in Sources */,
 				295E65AB234F26020098D8B6 /* MKDefaults.swift in Sources */,
-				29D1695224431E2B00134097 /* FireUpdaters.swift in Sources */,
 				29B0033A23C78AF50092A338 /* RCFooterLowerCell.swift in Sources */,
 				299771F723EB706A00D11DDF /* ChatManager.swift in Sources */,
 				29720A1B234A3D4B00FC4602 /* MKPhotoLoader.swift in Sources */,
 				29BE740923CF33200087D5F2 /* Detail.swift in Sources */,
+				29C68B68247ABEEF0076C7B6 /* AppConstant.swift in Sources */,
 				296021741F2CF5F600544468 /* ChatsCell.swift in Sources */,
 				296021641F2CF5F600544468 /* SelectUsersView.swift in Sources */,
 				2960218E1F2CF5F600544468 /* BlockedView.swift in Sources */,
@@ -1702,6 +1705,7 @@
 				29720A19234A3D4B00FC4602 /* MKAudioLoader.swift in Sources */,
 				2931FF1120ECDFC5002C0A97 /* PictureView.swift in Sources */,
 				296021501F2CF5F600544468 /* AllMediaView.swift in Sources */,
+				29962DCB24DD6CE2002F7860 /* FireObserver.swift in Sources */,
 				296021941F2CF5F600544468 /* KeepMediaView.swift in Sources */,
 				2965D6E2240ED12B007ABADE /* SyncEngine.swift in Sources */,
 				29ED990D23CCA28F0036BE27 /* DispatchQueue+Extension.swift in Sources */,
@@ -1710,14 +1714,13 @@
 				29A8B44023AD2F8A0084CA30 /* MediaUploader.swift in Sources */,
 				296021A01F2CF5F600544468 /* PrivacyView.swift in Sources */,
 				2990E66D239ADFAC008CFB9C /* CallAudioView.swift in Sources */,
-				29D1694F24431E2B00134097 /* FireUpdater.swift in Sources */,
-				29D1695124431E2B00134097 /* FireFetch.swift in Sources */,
 				29B0034323C78AF50092A338 /* RCHeaderUpperCell.swift in Sources */,
 				29B0033923C78AF50092A338 /* RCFooterUpperCell.swift in Sources */,
 				2960217C1F2CF5F600544468 /* PeopleView.swift in Sources */,
 				29B0030123C78A990092A338 /* RCDefaults.swift in Sources */,
 				296021E11F2CF5F600544468 /* NYTPhotoItem.swift in Sources */,
 				29E1B2FC230C07800036E3EC /* NSError+Extension.swift in Sources */,
+				29962DC824DD6CE2002F7860 /* FireStorage.swift in Sources */,
 				29720A13234A3D3000FC4602 /* RCAudioLoader.swift in Sources */,
 				2985441323A1305D0004E60B /* Members.swift in Sources */,
 				29A292EA23462CF700684B56 /* RCGroupChatView.swift in Sources */,
@@ -1729,6 +1732,7 @@
 				296A66B623A56E2000AEB5D2 /* Message.swift in Sources */,
 				294E496A1F8A6AA800045345 /* AddFriendsView.swift in Sources */,
 				295E65AC234F26020098D8B6 /* MKAudioController.swift in Sources */,
+				29962DCA24DD6CE2002F7860 /* FireFetcher.swift in Sources */,
 				2960218A1F2CF5F600544468 /* StatusView.swift in Sources */,
 				29B002FC23C785190092A338 /* MediaDownload.swift in Sources */,
 				29B0034423C78AF50092A338 /* RCMessagesView.swift in Sources */,
@@ -1736,9 +1740,10 @@
 				295E65AA234F26020098D8B6 /* MKMessage.swift in Sources */,
 				29BED8B4230B07A40071C11F /* Shortcut.swift in Sources */,
 				299771F923EB714000D11DDF /* Chat.swift in Sources */,
-				295E79AB23E6CB78004A154F /* MediaManager.swift in Sources */,
+				295E79AB23E6CB78004A154F /* Media.swift in Sources */,
 				296021981F2CF5F600544468 /* NetworkView.swift in Sources */,
 				295D93852094930400A222CA /* GroupsCell.swift in Sources */,
+				2920670124842CCE00F95244 /* Data+Extension.swift in Sources */,
 				2960214C1F2CF5F600544468 /* AllMediaCell.swift in Sources */,
 				29BE740C23CF336D0087D5F2 /* Details.swift in Sources */,
 				2906BB5B23C9CDC6007E31AC /* Realm+Extension.swift in Sources */,
@@ -1750,7 +1755,6 @@
 				29D29EF91D9A59E4006CA074 /* AppDelegate.swift in Sources */,
 				29A920772406E559000219C7 /* UIView+Extension.swift in Sources */,
 				29B0034E23C78B250092A338 /* RCMessageVideoCell.swift in Sources */,
-				29D1695424431E2B00134097 /* FireObserver.swift in Sources */,
 				2920B18B2030AD3500DB6E07 /* AudioView.swift in Sources */,
 				29720A14234A3D3000FC4602 /* RCVideoLoader.swift in Sources */,
 				294E496D1F8A6AA800045345 /* AddFriendsCell.swift in Sources */,
@@ -1760,7 +1764,6 @@
 				29BED8AF230B07A40071C11F /* Convert.swift in Sources */,
 				29B0035023C78B250092A338 /* RCMessageLocationCell.swift in Sources */,
 				296C62292401C65B000A4F8E /* CallKitProvider.swift in Sources */,
-				29D1695524431E2B00134097 /* FireObservers.swift in Sources */,
 				29B0034223C78AF50092A338 /* RCHeaderLowerCell.swift in Sources */,
 				29BED8B0230B07A40071C11F /* Cryptor.swift in Sources */,
 				296021F31F2CF5F600544468 /* RegisterEmailView.swift in Sources */,
@@ -1771,37 +1774,40 @@
 				296021841F2CF5F600544468 /* EditProfileView.swift in Sources */,
 				29E1B302230C1A960036E3EC /* Error+Extension.swift in Sources */,
 				2960219E1F2CF5F600544468 /* WallpapersView.swift in Sources */,
-				29D1695024431E2B00134097 /* AuthUser.swift in Sources */,
 				29226C8C23D7885C00AA9CE9 /* Person.swift in Sources */,
 				290C0225239BFEA300B7D9BC /* SyncObject.swift in Sources */,
-				29D1694E24431E2B00134097 /* FireFetcher.swift in Sources */,
 				296021681F2CF5F600544468 /* SelectUserView.swift in Sources */,
 				2941800F23E72FEA00C94845 /* UIImage+Extension.swift in Sources */,
 				29B0035223C78B250092A338 /* RCMessageAudioCell.swift in Sources */,
 				29BED8A8230B07A40071C11F /* Emoji.swift in Sources */,
 				29CAF5D323C8AA4600FA0185 /* RCLocationLoader.swift in Sources */,
+				29962DC724DD6CE2002F7860 /* AuthUser.swift in Sources */,
 				296021EB1F2CF5F600544468 /* LoginEmailView.swift in Sources */,
 				29B0030223C78A990092A338 /* RCMessage.swift in Sources */,
 				296021F51F2CF5F600544468 /* WelcomeView.swift in Sources */,
 				29104BC020EFC21B003BD623 /* RCAudioPlayer.swift in Sources */,
 				29BED8A9230B07A40071C11F /* Password.swift in Sources */,
 				2960219C1F2CF5F600544468 /* WallpapersCell.swift in Sources */,
+				29962DCC24DD6CE2002F7860 /* FireUpdaters.swift in Sources */,
 				296021861F2CF5F600544468 /* PasswordView.swift in Sources */,
 				298543F923A12D180004E60B /* ProfileView.swift in Sources */,
+				2927F6A6248282660030EB49 /* String+Extension.swift in Sources */,
 				29B0035123C78B250092A338 /* RCMessagePhotoCell.swift in Sources */,
+				29962DC924DD6CE2002F7860 /* FireFetch.swift in Sources */,
 				29CAF5D123C89AEE00FA0185 /* MKGroupChatView.swift in Sources */,
 				29720A1A234A3D4B00FC4602 /* MKVideoLoader.swift in Sources */,
 				296021531F2CF5F600544468 /* VideoView.swift in Sources */,
+				29962DC524DD6CE2002F7860 /* FireUpdater.swift in Sources */,
 				2990E670239ADFAC008CFB9C /* CallVideoView.swift in Sources */,
 				29B0034F23C78B250092A338 /* RCMessageCell.swift in Sources */,
 				29BED8B1230B07A40071C11F /* PushNotification.swift in Sources */,
-				29D1695324431E2B00134097 /* FireStorage.swift in Sources */,
 				296021961F2CF5F600544468 /* CacheView.swift in Sources */,
 				29B0034D23C78B250092A338 /* RCMessageEmojiCell.swift in Sources */,
 				29EABE4E20ECAC3C00A13F26 /* NavController.swift in Sources */,
 				2983DAC523EED1CA009CB9BB /* Single.swift in Sources */,
 				29BED8B3230B07A40071C11F /* Audio.swift in Sources */,
 				2955F553240712DE001C8D2A /* MenuExtension.swift in Sources */,
+				29962DC624DD6CE2002F7860 /* FireObservers.swift in Sources */,
 				2960217A1F2CF5F600544468 /* PeopleCell.swift in Sources */,
 				29E1B2FA230C07800036E3EC /* Array+Extension.swift in Sources */,
 				29BED8C6230B16B30071C11F /* ImagePicker.swift in Sources */,
@@ -1951,7 +1957,7 @@
 				INFOPLIST_FILE = app/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.relatedcode.messenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1977,7 +1983,7 @@
 				INFOPLIST_FILE = app/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.relatedcode.messenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";

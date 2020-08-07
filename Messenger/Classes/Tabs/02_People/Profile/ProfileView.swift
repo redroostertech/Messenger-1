@@ -70,7 +70,7 @@ class ProfileView: UIViewController {
 		person = realm.object(ofType: Person.self, forPrimaryKey: userId)
 
 		labelInitials.text = person.initials()
-		MediaDownload.startUser(person.objectId, pictureAt: person.pictureAt) { image, error in
+		MediaDownload.user(person.objectId, pictureAt: person.pictureAt) { image, error in
 			if (error == nil) {
 				self.imageUser.image = image?.square(to: 70)
 				self.labelInitials.text = nil
@@ -96,7 +96,7 @@ class ProfileView: UIViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	@IBAction func actionPhoto(_ sender: Any) {
 
-		if let path = MediaDownload.pathUser(person.objectId) {
+		if let path = Media.pathUser(person.objectId) {
 			if let image = UIImage.image(path, size: 320) {
 				let pictureView = PictureView(image: image)
 				present(pictureView, animated: true)

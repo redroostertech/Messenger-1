@@ -10,7 +10,6 @@
 // THE SOFTWARE.
 
 import RealmSwift
-import CryptoSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class Details: NSObject {
@@ -22,7 +21,7 @@ class Details: NSObject {
 		try! realm.safeWrite {
 			for userId in userIds {
 				let detail = Detail()
-				detail.objectId = "\(chatId)-\(userId)".md5()
+				detail.objectId = "\(chatId)-\(userId)".sha1()
 				detail.chatId = chatId
 				detail.userId = userId
 				realm.add(detail, update: .modified)
@@ -47,7 +46,7 @@ class Details: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func update(chatId: String, mutedUntil: Int64) {
+	class func update(chatId: String, mutedUntil: Int) {
 
 		let predicate = NSPredicate(format: "chatId == %@ AND userId == %@", chatId, AuthUser.userId())
 		if let detail = realm.objects(Detail.self).filter(predicate).first {

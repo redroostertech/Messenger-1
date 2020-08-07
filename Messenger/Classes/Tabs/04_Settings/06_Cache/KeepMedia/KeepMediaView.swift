@@ -19,7 +19,7 @@ class KeepMediaView: UIViewController {
 	@IBOutlet var cellMonth: UITableViewCell!
 	@IBOutlet var cellForever: UITableViewCell!
 
-	private var keepMedia: Int32 = 0
+	private var keepMedia: Int = 0
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	override func viewDidLoad() {
@@ -36,9 +36,9 @@ class KeepMediaView: UIViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func updateDetails() {
 
-		cellWeek.accessoryType = (keepMedia == KEEPMEDIA_WEEK) ? .checkmark : .none
-		cellMonth.accessoryType = (keepMedia == KEEPMEDIA_MONTH) ? .checkmark : .none
-		cellForever.accessoryType = (keepMedia == KEEPMEDIA_FOREVER) ? .checkmark : .none
+		cellWeek.accessoryType = (keepMedia == KeepMedia.Week) ? .checkmark : .none
+		cellMonth.accessoryType = (keepMedia == KeepMedia.Month) ? .checkmark : .none
+		cellForever.accessoryType = (keepMedia == KeepMedia.Forever) ? .checkmark : .none
 
 		tableView.reloadData()
 	}
@@ -80,9 +80,9 @@ extension KeepMediaView: UITableViewDelegate {
 
 		tableView.deselectRow(at: indexPath, animated: true)
 
-		if (indexPath.section == 0) && (indexPath.row == 0) { keepMedia = KEEPMEDIA_WEEK	}
-		if (indexPath.section == 0) && (indexPath.row == 1) { keepMedia = KEEPMEDIA_MONTH	}
-		if (indexPath.section == 0) && (indexPath.row == 2) { keepMedia = KEEPMEDIA_FOREVER	}
+		if (indexPath.section == 0) && (indexPath.row == 0) { keepMedia = KeepMedia.Week	}
+		if (indexPath.section == 0) && (indexPath.row == 1) { keepMedia = KeepMedia.Month	}
+		if (indexPath.section == 0) && (indexPath.row == 2) { keepMedia = KeepMedia.Forever	}
 
 		Persons.update(keepMedia: keepMedia)
 

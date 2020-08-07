@@ -41,7 +41,7 @@ class ChatsCell: UITableViewCell {
 	func loadImage(chat: Chat, tableView: UITableView, indexPath: IndexPath) {
 
 		if (chat.isPrivate) {
-			if let path = MediaDownload.pathUser(chat.userId) {
+			if let path = Media.pathUser(chat.userId) {
 				imageUser.image = UIImage.image(path, size: 50)
 				labelInitials.text = nil
 			} else {
@@ -60,7 +60,7 @@ class ChatsCell: UITableViewCell {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func downloadImage(chat: Chat, tableView: UITableView, indexPath: IndexPath) {
 
-		MediaDownload.startUser(chat.userId, pictureAt: chat.pictureAt) { image, error in
+		MediaDownload.user(chat.userId, pictureAt: chat.pictureAt) { image, error in
 			let indexSelf = tableView.indexPath(for: self)
 			if ((indexSelf == nil) || (indexSelf == indexPath)) {
 				if (error == nil) {

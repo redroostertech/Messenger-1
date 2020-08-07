@@ -10,14 +10,26 @@
 // THE SOFTWARE.
 
 import Foundation
+import CryptoKit
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-class Password: NSObject {
+extension String {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func get() -> String {
+	func sha1() -> String {
 
-		let temp = "This is where you can generate your very special password."
-		return temp.sha256()
+		let data = Data(self.utf8)
+		let hash = Insecure.SHA1.hash(data: data)
+
+		return hash.compactMap { String(format: "%02x", $0) }.joined()
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	func sha256() -> String {
+
+		let data = Data(self.utf8)
+		let hash = SHA256.hash(data: data)
+
+		return hash.compactMap { String(format: "%02x", $0) }.joined()
 	}
 }

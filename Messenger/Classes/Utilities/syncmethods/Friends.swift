@@ -10,7 +10,6 @@
 // THE SOFTWARE.
 
 import RealmSwift
-import CryptoSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class Friends: NSObject {
@@ -27,7 +26,7 @@ class Friends: NSObject {
 		let realm = try! Realm()
 		try! realm.safeWrite {
 			let friend = Friend()
-			friend.objectId = "\(AuthUser.userId())-\(userId)".md5()
+			friend.objectId = "\(AuthUser.userId())-\(userId)".sha1()
 			friend.userId = AuthUser.userId()
 			friend.friendId = userId
 			realm.add(friend, update: .modified)

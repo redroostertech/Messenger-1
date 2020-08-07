@@ -341,7 +341,7 @@ class ChatManager: NSObject {
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func unreadCount(_ chatId: String, _ lastRead: Int64) -> Int {
+	private func unreadCount(_ chatId: String, _ lastRead: Int) -> Int {
 
 		let format = "chatId == %@ AND userId != %@ AND createdAt > %ld AND isDeleted == NO"
 		let predicate = NSPredicate(format: format, chatId, AuthUser.userId(), lastRead)

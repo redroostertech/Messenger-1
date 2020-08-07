@@ -40,16 +40,16 @@ class MediaView: UIViewController {
 
 	// MARK: - Helper methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func updateCell(selectedNetwork: Int32, cell: UITableViewCell) {
+	func updateCell(selectedNetwork: Int, cell: UITableViewCell) {
 
-		if (selectedNetwork == NETWORK_MANUAL)	{ cell.detailTextLabel?.text = "Manual"				}
-		if (selectedNetwork == NETWORK_WIFI)	{ cell.detailTextLabel?.text = "Wi-Fi"				}
-		if (selectedNetwork == NETWORK_ALL)		{ cell.detailTextLabel?.text = "Wi-Fi + Cellular"	}
+		if (selectedNetwork == Network.Manual)	{ cell.detailTextLabel?.text = "Manual"				}
+		if (selectedNetwork == Network.WiFi)	{ cell.detailTextLabel?.text = "Wi-Fi"				}
+		if (selectedNetwork == Network.All)		{ cell.detailTextLabel?.text = "Wi-Fi + Cellular"	}
 	}
 
 	// MARK: - User actions
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func actionNetwork(mediaType: Int32) {
+	func actionNetwork(mediaType: Int) {
 
 		let networkView = NetworkView(mediaType: mediaType)
 		navigationController?.pushViewController(networkView, animated: true)
@@ -92,8 +92,8 @@ extension MediaView: UITableViewDelegate {
 
 		tableView.deselectRow(at: indexPath, animated: true)
 
-		if (indexPath.section == 0) && (indexPath.row == 0) { actionNetwork(mediaType: MEDIA_PHOTO)	}
-		if (indexPath.section == 0) && (indexPath.row == 1) { actionNetwork(mediaType: MEDIA_VIDEO)	}
-		if (indexPath.section == 0) && (indexPath.row == 2) { actionNetwork(mediaType: MEDIA_AUDIO)	}
+		if (indexPath.section == 0) && (indexPath.row == 0) { actionNetwork(mediaType: MediaType.Photo)	}
+		if (indexPath.section == 0) && (indexPath.row == 1) { actionNetwork(mediaType: MediaType.Video)	}
+		if (indexPath.section == 0) && (indexPath.row == 2) { actionNetwork(mediaType: MediaType.Audio)	}
 	}
 }

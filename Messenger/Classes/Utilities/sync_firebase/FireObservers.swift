@@ -10,6 +10,7 @@
 // THE SOFTWARE.
 
 import FirebaseFirestore
+import RealmSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class FireObservers: NSObject {
@@ -22,10 +23,14 @@ class FireObservers: NSObject {
 	private var observerSingle2:	FireObserver?
 	private var observerMember:		FireObserver?
 
+	private var tokenMembers:		NotificationToken?
+
 	private var observerMembers:	[String: FireObserver] = [:]
 	private var observerGroups:		[String: FireObserver] = [:]
 	private var observerDetails:	[String: FireObserver] = [:]
 	private var observerMessages:	[String: FireObserver] = [:]
+
+	private var members	= realm.objects(Member.self).filter(falsepredicate)
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	static let shared: FireObservers = {
@@ -48,148 +53,290 @@ class FireObservers: NSObject {
 	@objc private func initObservers() {
 
 		if (AuthUser.userId() != "") {
-			if (observerPerson == nil)	{ createObserverPerson()	}
-			if (observerFriend == nil)	{ createObserverFriend()	}
-			if (observerBlocked == nil)	{ createObserverBlocked()	}
-			if (observerBlocker == nil)	{ createObserverBlocker()	}
-			if (observerSingle1 == nil)	{ createObserverSingle1()	}
-			if (observerSingle2 == nil)	{ createObserverSingle2()	}
-			if (observerMember == nil)	{ createObserverMember()	}
+			createObserverPerson()
+			createObserverFriend()
+			createObserverBlocked()
+			createObserverBlocker()
+			createObserverSingle1()
+			createObserverSingle2()
+			createObserverMember()
+			createMemberDependencies()
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	@objc private func stopObservers() {
 
-		observerPerson?.removeObserver();	observerPerson = nil
-		observerFriend?.removeObserver();	observerFriend = nil
-		observerBlocked?.removeObserver();	observerBlocked = nil
-		observerBlocker?.removeObserver();	observerBlocker = nil
-		observerSingle1?.removeObserver();	observerSingle1 = nil
-		observerSingle2?.removeObserver();	observerSingle2 = nil
-		observerMember?.removeObserver();	observerMember = nil
-
-		for chatId in observerMembers.keys	{ observerMembers[chatId]?.removeObserver()	 }
-		for chatId in observerGroups.keys	{ observerGroups[chatId]?.removeObserver()	 }
-		for chatId in observerDetails.keys	{ observerDetails[chatId]?.removeObserver()	 }
-		for chatId in observerMessages.keys	{ observerMessages[chatId]?.removeObserver() }
-
-		observerMembers.removeAll()
-		observerGroups.removeAll()
-		observerDetails.removeAll()
-		observerMessages.removeAll()
+		removeObserverPerson()
+		removeObserverFriend()
+		removeObserverBlocked()
+		removeObserverBlocker()
+		removeObserverSingle1()
+		removeObserverSingle2()
+		removeObserverMember()
+		removeMemberDependencies()
 	}
 
-	// MARK: -
+	// MARK: - Person
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func createObserverPerson() {
 
-		let query = Firestore.firestore().collection("Person")
-			.whereField("updatedAt", isGreaterThan: Person.lastUpdatedAt())
-		observerPerson = FireObserver(query, to: Person.self)
+		if (observerPerson == nil) {
+			let query = Firestore.firestore().collection("Person").whereField("updatedAt", isGreaterThan: Person.lastUpdatedAt())
+			observerPerson = FireObserver(query, to: Person.self)
+		}
 	}
 
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverPerson() {
+
+		observerPerson?.removeObserver()
+		observerPerson = nil
+	}
+
+	// MARK: - Friend
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func createObserverFriend() {
 
-		let query = Firestore.firestore().collection("Friend")
-			.whereField("userId", isEqualTo: AuthUser.userId())
-		observerFriend = FireObserver(query, to: Friend.self)
+		if (observerFriend == nil) {
+			let query = Firestore.firestore().collection("Friend").whereField("userId", isEqualTo: AuthUser.userId())
+			observerFriend = FireObserver(query, to: Friend.self)
+		}
 	}
 
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverFriend() {
+
+		observerFriend?.removeObserver()
+		observerFriend = nil
+	}
+
+	// MARK: - Blocked
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func createObserverBlocked() {
 
-		let query = Firestore.firestore().collection("Blocked")
-			.whereField("blockedId", isEqualTo: AuthUser.userId())
-		observerBlocked = FireObserver(query, to: Blocked.self)
+		if (observerBlocked == nil) {
+			let query = Firestore.firestore().collection("Blocked").whereField("blockedId", isEqualTo: AuthUser.userId())
+			observerBlocked = FireObserver(query, to: Blocked.self)
+		}
 	}
 
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverBlocked() {
+
+		observerBlocked?.removeObserver()
+		observerBlocked = nil
+	}
+
+	// MARK: - Blocker
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func createObserverBlocker() {
 
-		let query = Firestore.firestore().collection("Blocked")
-			.whereField("blockerId", isEqualTo: AuthUser.userId())
-		observerBlocker = FireObserver(query, to: Blocked.self)
+		if (observerBlocker == nil) {
+			let query = Firestore.firestore().collection("Blocked").whereField("blockerId", isEqualTo: AuthUser.userId())
+			observerBlocker = FireObserver(query, to: Blocked.self)
+		}
 	}
 
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverBlocker() {
+
+		observerBlocker?.removeObserver()
+		observerBlocker = nil
+	}
+
+	// MARK: - Single1
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func createObserverSingle1() {
 
-		let query = Firestore.firestore().collection("Single")
-			.whereField("userId1", isEqualTo: AuthUser.userId())
-		observerSingle1 = FireObserver(query, to: Single.self)
+		if (observerSingle1 == nil) {
+			let query = Firestore.firestore().collection("Single").whereField("userId1", isEqualTo: AuthUser.userId())
+			observerSingle1 = FireObserver(query, to: Single.self)
+		}
 	}
 
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverSingle1() {
+
+		observerSingle1?.removeObserver()
+		observerSingle1 = nil
+	}
+
+	// MARK: - Single2
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func createObserverSingle2() {
 
-		let query = Firestore.firestore().collection("Single")
-			.whereField("userId2", isEqualTo: AuthUser.userId())
-		observerSingle2 = FireObserver(query, to: Single.self)
+		if (observerSingle2 == nil) {
+			let query = Firestore.firestore().collection("Single").whereField("userId2", isEqualTo: AuthUser.userId())
+			observerSingle2 = FireObserver(query, to: Single.self)
+		}
 	}
 
-	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverSingle2() {
+
+		observerSingle2?.removeObserver()
+		observerSingle2 = nil
+	}
+
+	// MARK: - Member
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func createObserverMember() {
 
-		let query = Firestore.firestore().collection("Member")
-			.whereField("userId", isEqualTo: AuthUser.userId())
-		observerMember = FireObserver(query, to: Member.self) { insert, modify in
-			if (insert) {
-				if let chatIds = Members.chatIds() {
-					self.createObserverMembers(chatIds)
-					self.createObserverGroup(chatIds)
-					self.createObserverDetail(chatIds)
-					self.createObserverMessage(chatIds)
-				}
-			}
-		}
-	}
-
-	// MARK: -
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func createObserverMembers(_ chatIds: [String]) {
-
-		for chatId in chatIds {
-			if (observerMembers[chatId] == nil) {
-				let query = Firestore.firestore().collection("Member").whereField("chatId", isEqualTo: chatId)
-				observerMembers[chatId] = FireObserver(query, to: Member.self)
-			}
+		if (observerMember == nil) {
+			let query = Firestore.firestore().collection("Member").whereField("userId", isEqualTo: AuthUser.userId())
+			observerMember = FireObserver(query, to: Member.self)
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func createObserverGroup(_ chatIds: [String]) {
+	private func removeObserverMember() {
 
-		for chatId in chatIds {
-			if (observerGroups[chatId] == nil) {
-				let query = Firestore.firestore().collection("Group").whereField("chatId", isEqualTo: chatId)
-				observerGroups[chatId] = FireObserver(query, to: Group.self)
+		observerMember?.removeObserver()
+		observerMember = nil
+	}
+
+	// MARK: - Member Dependencies
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func createMemberDependencies() {
+
+		if (tokenMembers != nil) { return }
+
+		let predicate = NSPredicate(format: "userId == %@", AuthUser.userId())
+		members = realm.objects(Member.self).filter(predicate)
+
+		members.safeObserve({ changes in
+			switch changes {
+				case .initial:
+					for member in self.members {
+						if (member.isActive) {
+							self.createMemberDependencies(member.chatId)
+						}
+					}
+				case .update(let results, _, let insert, let modify):
+					for index in insert + modify {
+						let member = results[index]
+						if (member.isActive) {
+							self.createMemberDependencies(member.chatId)
+						} else {
+							self.removeMemberDependencies(member.chatId)
+						}
+					}
+				default: break
 			}
+		}, completion: { token in
+			self.tokenMembers = token
+		})
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeMemberDependencies() {
+
+		tokenMembers?.invalidate()
+		tokenMembers = nil
+
+		members	= realm.objects(Member.self).filter(falsepredicate)
+
+		for chatId in observerMembers.keys	{ removeObserverMember(chatId)	}
+		for chatId in observerGroups.keys	{ removeObserverGroup(chatId)	}
+		for chatId in observerDetails.keys	{ removeObserverDetail(chatId)	}
+		for chatId in observerMessages.keys	{ removeObserverMessage(chatId)	}
+	}
+
+	// MARK: - Member Dependencies by chatId
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func createMemberDependencies(_ chatId: String) {
+
+		createObserverMember(chatId)
+		createObserverGroup(chatId)
+		createObserverDetail(chatId)
+		createObserverMessage(chatId)
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeMemberDependencies(_ chatId: String) {
+
+		removeObserverMember(chatId)
+		removeObserverGroup(chatId)
+		removeObserverDetail(chatId)
+		removeObserverMessage(chatId)
+	}
+
+	// MARK: - Member by chatId
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func createObserverMember(_ chatId: String) {
+
+		if (observerMembers[chatId] == nil) {
+			let query = Firestore.firestore().collection("Member").whereField("chatId", isEqualTo: chatId)
+			observerMembers[chatId] = FireObserver(query, to: Member.self)
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func createObserverDetail(_ chatIds: [String]) {
+	private func removeObserverMember(_ chatId: String) {
 
-		for chatId in chatIds {
-			if (observerDetails[chatId] == nil) {
-				let query = Firestore.firestore().collection("Detail").whereField("chatId", isEqualTo: chatId)
-				observerDetails[chatId] = FireObserver(query, to: Detail.self)
-			}
+		if (observerMembers[chatId] != nil) {
+			observerMembers[chatId]?.removeObserver()
+			observerMembers.removeValue(forKey: chatId)
+		}
+	}
+
+	// MARK: - Group by chatId
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func createObserverGroup(_ chatId: String) {
+
+		if (observerGroups[chatId] == nil) {
+			let query = Firestore.firestore().collection("Group").whereField("chatId", isEqualTo: chatId)
+			observerGroups[chatId] = FireObserver(query, to: Group.self)
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private func createObserverMessage(_ chatIds: [String]) {
+	private func removeObserverGroup(_ chatId: String) {
 
-		for chatId in chatIds {
-			if (observerMessages[chatId] == nil) {
-				let query = Firestore.firestore().collection("Message").whereField("chatId", isEqualTo: chatId)
-					.whereField("updatedAt", isGreaterThan: Message.lastUpdatedAt(chatId))
-				observerMessages[chatId] = FireObserver(query, to: Message.self)
-			}
+		if (observerGroups[chatId] != nil) {
+			observerGroups[chatId]?.removeObserver()
+			observerGroups.removeValue(forKey: chatId)
+		}
+	}
+
+	// MARK: - Detail by chatId
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func createObserverDetail(_ chatId: String) {
+
+		if (observerDetails[chatId] == nil) {
+			let query = Firestore.firestore().collection("Detail").whereField("chatId", isEqualTo: chatId)
+			observerDetails[chatId] = FireObserver(query, to: Detail.self)
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverDetail(_ chatId: String) {
+
+		if (observerDetails[chatId] != nil) {
+			observerDetails[chatId]?.removeObserver()
+			observerDetails.removeValue(forKey: chatId)
+		}
+	}
+
+	// MARK: - Message by chatId
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func createObserverMessage(_ chatId: String) {
+
+		if (observerMessages[chatId] == nil) {
+			let query = Firestore.firestore().collection("Message").whereField("chatId", isEqualTo: chatId)
+				.whereField("updatedAt", isGreaterThan: Message.lastUpdatedAt(chatId))
+			observerMessages[chatId] = FireObserver(query, to: Message.self)
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private func removeObserverMessage(_ chatId: String) {
+
+		if (observerMessages[chatId] != nil) {
+			observerMessages[chatId]?.removeObserver()
+			observerMessages.removeValue(forKey: chatId)
 		}
 	}
 }

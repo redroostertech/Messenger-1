@@ -15,44 +15,43 @@ import UIKit
 class MediaDownload: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func startUser(_ name: String, pictureAt: Int64, completion: @escaping (_ image: UIImage?, _ error: Error?) -> Void) {
+	class func user(_ name: String, pictureAt: Int, completion: @escaping (UIImage?, Error?) -> Void) {
 
 		if (pictureAt != 0) {
 			start(dir: "user", name: name, ext: "jpg", manual: false) { path, error in
 				if (error == nil) {
-					completion(UIImage(contentsOfFile: path), nil)
+					completion(UIImage(path: path), nil)
 				} else {
 					completion(nil, error)
 				}
 			}
 		} else {
-			completion(nil, NSError.description("Missing picture.", code: 100))
+			completion(nil, NSError("Missing picture.", 100))
 		}
 	}
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func startPhoto(_ name: String, completion: @escaping (_ path: String, _ error: Error?) -> Void) {
+	class func photo(_ name: String, completion: @escaping (String, Error?) -> Void) {
 
 		start(dir: "media", name: name, ext: "jpg", manual: true, completion: completion)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func startVideo(_ name: String, completion: @escaping (_ path: String, _ error: Error?) -> Void) {
+	class func video(_ name: String, completion: @escaping (String, Error?) -> Void) {
 
 		start(dir: "media", name: name, ext: "mp4", manual: true, completion: completion)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func startAudio(_ name: String, completion: @escaping (_ path: String, _ error: Error?) -> Void) {
+	class func audio(_ name: String, completion: @escaping (String, Error?) -> Void) {
 
 		start(dir: "media", name: name, ext: "m4a", manual: true, completion: completion)
 	}
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private class func start(dir: String, name: String, ext: String, manual: Bool,
-							 completion: @escaping (_ path: String, _ error: Error?) -> Void) {
+	private class func start(dir: String, name: String, ext: String, manual: Bool, completion: @escaping (String, Error?) -> Void) {
 
 		let file = "\(name).\(ext)"
 		let path = Dir.document(dir, and: file)
@@ -74,7 +73,7 @@ class MediaDownload: NSObject {
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		if (manual) {
 			if (File.exist(path: pathManual)) {
-				completion("", NSError.description("Manual download required.", code: 101))
+				completion("", NSError("Manual download required.", 101))
 				return
 			}
 			try? "manual".write(toFile: pathManual, atomically: false, encoding: .utf8)
@@ -88,7 +87,7 @@ class MediaDownload: NSObject {
 			if let temp = try? String(contentsOfFile: pathLoading, encoding: .utf8) {
 				if let check = Int(temp) {
 					if (time - check < 60) {
-						completion("", NSError.description("Already downloading.", code: 102))
+						completion("", NSError("Already downloading.", 102))
 						return
 					}
 				}
@@ -103,69 +102,6 @@ class MediaDownload: NSObject {
 			DispatchQueue.main.async {
 				completion(path, error)
 			}
-		}
-	}
-
-	// MARK: -
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func pathUser(_ name: String) -> String?	{ return path(dir: "user", name: name, ext: "jpg")	}
-	class func pathPhoto(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "jpg")	}
-	class func pathVideo(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "mp4")	}
-	class func pathAudio(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "m4a")	}
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private class func path(dir: String, name: String, ext: String) -> String? {
-
-		let file = "\(name).\(ext)"
-		let path = Dir.document(dir, and: file)
-
-		return File.exist(path: path) ? path : nil
-	}
-
-	// MARK: -
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func clearManualPhoto(_ name: String) { clearManual(dir: "media", name: name, ext: "jpg") }
-	class func clearManualVideo(_ name: String) { clearManual(dir: "media", name: name, ext: "mp4") }
-	class func clearManualAudio(_ name: String) { clearManual(dir: "media", name: name, ext: "m4a") }
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private class func clearManual(dir: String, name: String, ext: String) {
-
-		let file = "\(name).\(ext)"
-
-		let fileManual = file + ".manual"
-		let pathManual = Dir.document(dir, and: fileManual)
-
-		let fileLoading = file + ".loading"
-		let pathLoading = Dir.document(dir, and: fileLoading)
-
-		File.remove(path: pathManual)
-		File.remove(path: pathLoading)
-	}
-
-	// MARK: -
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func saveUser(_ name: String, data: Data)		{ save(data: data, dir: "user", name: name, ext: "jpg", manual: false)	}
-	class func savePhoto(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "jpg", manual: true)	}
-	class func saveVideo(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "mp4", manual: true)	}
-	class func saveAudio(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "m4a", manual: true)	}
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private class func save(data: Data, dir: String, name: String, ext: String, manual: Bool) {
-
-		let file = "\(name).\(ext)"
-		let path = Dir.document(dir, and: file)
-
-		let fileManual = file + ".manual"
-		let pathManual = Dir.document(dir, and: fileManual)
-
-		try? data.write(to: URL(fileURLWithPath: path), options: .atomic)
-
-		if (manual) {
-			try? "manual".write(toFile: pathManual, atomically: false, encoding: .utf8)
 		}
 	}
 }

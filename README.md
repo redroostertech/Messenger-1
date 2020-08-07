@@ -1,4 +1,4 @@
-<a href='https://github.com/relatedcode/appdesignkit'><img src="https://relatedcode.com/github/header18.png" width="880"></a>
+<img src="https://relatedcode.com/github/header14.png" width="880">
 
 ## OVERVIEW
 
@@ -6,8 +6,8 @@ This is a native iOS Messenger app, with audio/video calls and realtime chat con
 
 ---
 
-<img src="https://relatedcode.com/screen56/chat03x.png" width="290">.<img src="https://relatedcode.com/screen56/call1x.png" width="290">.<img src="https://relatedcode.com/screen56/chats01x.png" width="290">
-<img src="https://relatedcode.com/screen56/settings2.png" width="290">.<img src="https://relatedcode.com/screen56/chats02.png" width="290">.<img src="https://relatedcode.com/screen56/chat07.png" width="290">
+<img src="https://relatedcode.com/screen56/chat03x.png" width="270">.<img src="https://relatedcode.com/screen56/call1x.png" width="270">.<img src="https://relatedcode.com/screen56/chats01x.png" width="270">
+<img src="https://relatedcode.com/screen56/settings2.png" width="270">.<img src="https://relatedcode.com/screen56/chats02.png" width="270">.<img src="https://relatedcode.com/screen56/chat07.png" width="270">
 
 ---
 
@@ -89,8 +89,8 @@ This is a native iOS Messenger app, with audio/video calls and realtime chat con
 
 ---
 
-<img src="https://relatedcode.com/screen56/addfriendsx.png" width="290">.<img src="https://relatedcode.com/screen56/chat08x.png" width="290">.<img src="https://relatedcode.com/screen56/stickersx.png" width="290">
-<img src="https://relatedcode.com/screen56/settings_cache.png" width="290">.<img src="https://relatedcode.com/screen56/settings_archive1.png" width="290">.<img src="https://relatedcode.com/screen56/chat04.png" width="290">
+<img src="https://relatedcode.com/screen56/addfriendsx.png" width="270">.<img src="https://relatedcode.com/screen56/chat08x.png" width="270">.<img src="https://relatedcode.com/screen56/stickersx.png" width="270">
+<img src="https://relatedcode.com/screen56/settings_cache.png" width="270">.<img src="https://relatedcode.com/screen56/settings_archive1.png" width="270">.<img src="https://relatedcode.com/screen56/chat04.png" width="270">
 
 ---
 
@@ -120,8 +120,8 @@ This is a native iOS Messenger app, with audio/video calls and realtime chat con
 
 ---
 
-<img src="https://relatedcode.com/screen56/profile2.png" width="290">.<img src="https://relatedcode.com/screen56/people.png" width="290">.<img src="https://relatedcode.com/screen56/chat06.png" width="290">
-<img src="https://relatedcode.com/screen56/chat05x.png" width="290">.<img src="https://relatedcode.com/screen56/settings1x.png" width="290">.<img src="https://relatedcode.com/screen56/chats03x.png" width="290">
+<img src="https://relatedcode.com/screen56/profile2.png" width="270">.<img src="https://relatedcode.com/screen56/people.png" width="270">.<img src="https://relatedcode.com/screen56/chat06.png" width="270">
+<img src="https://relatedcode.com/screen56/chat05x.png" width="270">.<img src="https://relatedcode.com/screen56/settings1x.png" width="270">.<img src="https://relatedcode.com/screen56/chats03x.png" width="270">
 
 ---
 
@@ -131,15 +131,29 @@ Do you have any questions or an idea? My email is info@relatedcode.com or you ca
 
 ## LICENSE
 
+MIT License
+
+Copyright (c) 2020 Related Code
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
-<img src="https://relatedcode.com/screen56/chat01.png" width="290">.<img src="https://relatedcode.com/screen56/call2.png" width="290">.<img src="https://relatedcode.com/screen56/profile1.png" width="290">
-<img src="https://relatedcode.com/screen56/allmediax.png" width="290">.<img src="https://relatedcode.com/screen56/picture1.png" width="290">.<img src="https://relatedcode.com/screen56/settings_status1x.png" width="290">
+<img src="https://relatedcode.com/screen56/chat01.png" width="270">.<img src="https://relatedcode.com/screen56/call2.png" width="270">.<img src="https://relatedcode.com/screen56/profile1.png" width="270">
+<img src="https://relatedcode.com/screen56/allmediax.png" width="270">.<img src="https://relatedcode.com/screen56/picture1.png" width="270">.<img src="https://relatedcode.com/screen56/settings_status1x.png" width="270">

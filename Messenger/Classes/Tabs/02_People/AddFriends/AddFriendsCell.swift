@@ -29,7 +29,7 @@ class AddFriendsCell: UITableViewCell {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func loadImage(person: Person, tableView: UITableView, indexPath: IndexPath) {
 
-		if let path = MediaDownload.pathUser(person.objectId) {
+		if let path = Media.pathUser(person.objectId) {
 			imageUser.image = UIImage.image(path, size: 40)
 			labelInitials.text = nil
 		} else {
@@ -42,7 +42,7 @@ class AddFriendsCell: UITableViewCell {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func downloadImage(person: Person, tableView: UITableView, indexPath: IndexPath) {
 
-		MediaDownload.startUser(person.objectId, pictureAt: person.pictureAt) { image, error in
+		MediaDownload.user(person.objectId, pictureAt: person.pictureAt) { image, error in
 			let indexSelf = tableView.indexPath(for: self)
 			if ((indexSelf == nil) || (indexSelf == indexPath)) {
 				if (error == nil) {

@@ -24,9 +24,7 @@ class Users: NSObject {
 		let welcomeView = WelcomeView()
 		welcomeView.isModalInPresentation = true
 		welcomeView.modalPresentationStyle = .fullScreen
-		viewController.present(welcomeView, animated: true) {
-			viewController.tabBarController?.selectedIndex = Int(DEFAULT_TAB)
-		}
+		viewController.present(welcomeView, animated: true)
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -73,7 +71,7 @@ class Users: NSObject {
 
 		NotificationCenter.post(notification: NOTIFICATION_USER_LOGGED_OUT)
 
-		MediaManager.cleanupManual(logout: true)
+		Media.cleanupManual(logout: true)
 
 		let realm = try! Realm()
 		try! realm.safeWrite {

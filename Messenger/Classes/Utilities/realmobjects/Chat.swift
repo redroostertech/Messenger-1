@@ -23,15 +23,15 @@ class Chat: Object {
 	@objc dynamic var initials = ""
 
 	@objc dynamic var userId = ""
-	@objc dynamic var pictureAt: Int64 = 0
+	@objc dynamic var pictureAt: Int = 0
 
 	@objc dynamic var lastMessageId = ""
 	@objc dynamic var lastMessageText = ""
-	@objc dynamic var lastMessageAt: Int64 = 0
+	@objc dynamic var lastMessageAt: Int = 0
 
 	@objc dynamic var typing = false
-	@objc dynamic var lastRead: Int64 = 0
-	@objc dynamic var mutedUntil: Int64 = 0
+	@objc dynamic var lastRead: Int = 0
+	@objc dynamic var mutedUntil: Int = 0
 	@objc dynamic var unreadCount: Int = 0
 
 	@objc dynamic var isDeleted = false

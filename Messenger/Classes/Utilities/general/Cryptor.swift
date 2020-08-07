@@ -9,70 +9,92 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import RNCryptor_objc
+import CryptoKit
+import Foundation
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class Cryptor: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func encrypt(text: String, chatId: String) -> String? {
+	class func encrypt(text: String) -> String? {
 
 		if let dataDecrypted = text.data(using: .utf8) {
-			if let dataEncrypted = encrypt(data: dataDecrypted, chatId: chatId) {
-				return dataEncrypted.base64EncodedString(options: [])
+			if let dataEncrypted = encrypt(data: dataDecrypted) {
+				return dataEncrypted.base64EncodedString()
 			}
 		}
 		return nil
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func decrypt(text: String, chatId: String) -> String? {
+	class func decrypt(text: String) -> String? {
 
-		if let dataEncrypted = Data(base64Encoded: text, options: []) {
-			if let dataDecrypted = decrypt(data: dataEncrypted, chatId: chatId) {
+		if let dataEncrypted = Data(base64Encoded: text) {
+			if let dataDecrypted = decrypt(data: dataEncrypted) {
 				return String(data: dataDecrypted, encoding: .utf8)
 			}
 		}
 		return nil
 	}
 
+	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func encrypt(data: Data, chatId: String) -> Data? {
+	class func encrypt(path: String) {
 
-		let password = Password.get(chatId: chatId)
-		return try? RNEncryptor.encryptData(data, with: kRNCryptorAES256Settings, password: password)
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func decrypt(data: Data, chatId: String) -> Data? {
-
-		let password = Password.get(chatId: chatId)
-		return try? RNDecryptor.decryptData(data, withPassword: password)
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func encrypt(path: String, chatId: String) {
-
-		do {
-			let dataDecrypted = try Data(contentsOf: URL(fileURLWithPath: path))
-			if let dataEncrypted = encrypt(data: dataDecrypted, chatId: chatId) {
-				do {
-					try dataEncrypted.write(to: URL(fileURLWithPath: path), options: .atomic)
-				} catch { print("Cryptor encryptFile error.") }
+		if let dataDecrypted = Data(path: path) {
+			if let dataEncrypted = encrypt(data: dataDecrypted) {
+				dataEncrypted.write(path: path, options: .atomic)
 			}
-		} catch { print("Cryptor encryptFile error.") }
+		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func decrypt(path: String, chatId: String) {
+	class func decrypt(path: String) {
 
-		do {
-			let dataEncrypted = try Data(contentsOf: URL(fileURLWithPath: path))
-			if let dataDecrypted = decrypt(data: dataEncrypted, chatId: chatId) {
-				do {
-					try dataDecrypted.write(to: URL(fileURLWithPath: path), options: .atomic)
-				} catch { print("Cryptor decryptFile error.") }
+		if let dataEncrypted = Data(path: path) {
+			if let dataDecrypted = decrypt(data: dataEncrypted) {
+				dataDecrypted.write(path: path, options: .atomic)
 			}
-		} catch { print("Cryptor decryptFile error.") }
+		}
+	}
+
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func encrypt(data: Data) -> Data? {
+
+		return try? encrypt(data: data, key: Password.get())
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func decrypt(data: Data) -> Data? {
+
+		return try? decrypt(data: data, key: Password.get())
+	}
+
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func encrypt(data: Data, key: String) throws -> Data {
+
+		let cryptedBox = try ChaChaPoly.seal(data, using: symmetricKey(key))
+		let sealedBox = try ChaChaPoly.SealedBox(combined: cryptedBox.combined)
+
+		return sealedBox.combined
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func decrypt(data: Data, key: String) throws -> Data {
+
+		let sealedBox = try ChaChaPoly.SealedBox(combined: data)
+		let decryptedData = try ChaChaPoly.open(sealedBox, using: symmetricKey(key))
+
+		return decryptedData
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	private class func symmetricKey(_ key: String) -> SymmetricKey {
+
+		let dataKey = key.data(using: .utf8)!
+		let hash256 = SHA256.hash(data: dataKey)
+		return SymmetricKey(data: hash256)
 	}
 }

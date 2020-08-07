@@ -44,25 +44,25 @@ class RCMessagePhotoCell: RCMessageCell {
 			viewBubble.addSubview(imageViewManual)
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_UNKNOWN) {
+		if (rcmessage.mediaStatus == MediaStatus.Unknown) {
 			imageViewPhoto.image = nil
 			activityIndicator.stopAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_LOADING) {
+		if (rcmessage.mediaStatus == MediaStatus.Loading) {
 			imageViewPhoto.image = nil
 			activityIndicator.startAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+		if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 			imageViewPhoto.image = rcmessage.photoImage
 			activityIndicator.stopAnimating()
 			imageViewManual.isHidden = true
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_MANUAL) {
+		if (rcmessage.mediaStatus == MediaStatus.Manual) {
 			imageViewPhoto.image = nil
 			activityIndicator.stopAnimating()
 			imageViewManual.isHidden = false

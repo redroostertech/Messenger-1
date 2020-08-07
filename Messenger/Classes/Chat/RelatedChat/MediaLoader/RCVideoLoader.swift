@@ -17,7 +17,7 @@ class RCVideoLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func start(_ rcmessage: RCMessage, in tableView: UITableView) {
 
-		if let path = MediaDownload.pathVideo(rcmessage.messageId) {
+		if let path = Media.pathVideo(rcmessage.messageId) {
 			showMedia(rcmessage, path: path)
 		} else {
 			loadMedia(rcmessage, in: tableView)
@@ -27,7 +27,7 @@ class RCVideoLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func manual(_ rcmessage: RCMessage, in tableView: UITableView) {
 
-		MediaDownload.clearManualVideo(rcmessage.messageId)
+		Media.clearManualVideo(rcmessage.messageId)
 		downloadMedia(rcmessage, in: tableView)
 		tableView.reloadData()
 	}
@@ -37,8 +37,8 @@ class RCVideoLoader: NSObject {
 
 		let network = Persons.networkVideo()
 
-		if (network == NETWORK_MANUAL) || ((network == NETWORK_WIFI) && (Connectivity.isReachableViaWiFi() == false)) {
-			rcmessage.mediaStatus = MEDIASTATUS_MANUAL
+		if (network == Network.Manual) || ((network == Network.WiFi) && (Connectivity.isReachableViaWiFi() == false)) {
+			rcmessage.mediaStatus = MediaStatus.Manual
 		} else {
 			downloadMedia(rcmessage, in: tableView)
 		}
@@ -47,14 +47,14 @@ class RCVideoLoader: NSObject {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private class func downloadMedia(_ rcmessage: RCMessage, in tableView: UITableView) {
 
-		rcmessage.mediaStatus = MEDIASTATUS_LOADING
+		rcmessage.mediaStatus = MediaStatus.Loading
 
-		MediaDownload.startVideo(rcmessage.messageId) { path, error in
+		MediaDownload.video(rcmessage.messageId) { path, error in
 			if (error == nil) {
-				Cryptor.decrypt(path: path, chatId: rcmessage.chatId)
+				Cryptor.decrypt(path: path)
 				showMedia(rcmessage, path: path)
 			} else {
-				rcmessage.mediaStatus = MEDIASTATUS_MANUAL
+				rcmessage.mediaStatus = MediaStatus.Manual
 			}
 			tableView.reloadData()
 		}
@@ -67,6 +67,6 @@ class RCVideoLoader: NSObject {
 
 		rcmessage.videoPath = path
 		rcmessage.videoThumbnail = thumbnail.square(to: 200)
-		rcmessage.mediaStatus = MEDIASTATUS_SUCCEED
+		rcmessage.mediaStatus = MediaStatus.Succeed
 	}
 }

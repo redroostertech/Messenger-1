@@ -20,7 +20,7 @@ class Message: SyncObject {
 	@objc dynamic var userId = ""
 	@objc dynamic var userFullname = ""
 	@objc dynamic var userInitials = ""
-	@objc dynamic var userPictureAt: Int64 = 0
+	@objc dynamic var userPictureAt: Int = 0
 
 	@objc dynamic var type = ""
 	@objc dynamic var text = ""
@@ -39,7 +39,14 @@ class Message: SyncObject {
 	@objc dynamic var isDeleted = false
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func lastUpdatedAt(_ chatId: String) -> Int64 {
+	override class func encryptedProperties() -> [String] {
+
+		return ["text"]
+	}
+
+	// MARK: -
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	class func lastUpdatedAt(_ chatId: String) -> Int {
 
 		let realm = try! Realm()
 		let predicate = NSPredicate(format: "chatId == %@", chatId)

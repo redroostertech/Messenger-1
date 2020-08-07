@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		OneSignal.initWithLaunchOptions(launchOptions, appId: ONESIGNAL_APPID, handleNotificationReceived: nil,
 										handleNotificationAction: nil, settings: [kOSSettingsKeyAutoPrompt: false])
 		OneSignal.setLogLevel(ONE_S_LOG_LEVEL.LL_NONE, visualLevel: ONE_S_LOG_LEVEL.LL_NONE)
-		OneSignal.inFocusDisplayType = OSNotificationDisplayType.none
+		OneSignal.inFocusDisplayType = .none
 
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		// Manager initialization
@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		tabBarController = UITabBarController()
 		tabBarController.viewControllers = [navController1, navController2, navController3, navController4]
 		tabBarController.tabBar.isTranslucent = false
-		tabBarController.selectedIndex = Int(DEFAULT_TAB)
+		tabBarController.selectedIndex = App.DefaultTab
 
 		window?.rootViewController = tabBarController
 		window?.makeKeyAndVisible()
@@ -143,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationDidBecomeActive(_ application: UIApplication) {
 
 		LocationManager.start()
-		MediaManager.cleanupExpired()
+		Media.cleanupExpired()
 
 		NotificationCenter.post(notification: NOTIFICATION_APP_STARTED)
 

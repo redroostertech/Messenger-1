@@ -10,7 +10,6 @@
 // THE SOFTWARE.
 
 import RealmSwift
-import CryptoSwift
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class Members: NSObject {
@@ -22,7 +21,7 @@ class Members: NSObject {
 		try! realm.safeWrite {
 			for userId in userIds {
 				let member = Member()
-				member.objectId = "\(chatId)-\(userId)".md5()
+				member.objectId = "\(chatId)-\(userId)".sha1()
 				member.chatId = chatId
 				member.userId = userId
 				realm.add(member, update: .modified)

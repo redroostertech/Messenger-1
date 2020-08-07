@@ -53,12 +53,12 @@ class AllMediaView: UIViewController {
 
 		for message in messages {
 			if (message.type == MESSAGE_PHOTO) {
-				if (MediaDownload.pathPhoto(message.objectId) != nil) {
+				if (Media.pathPhoto(message.objectId) != nil) {
 					messages_media.append(message)
 				}
 			}
 			if (message.type == MESSAGE_VIDEO) {
-				if (MediaDownload.pathVideo(message.objectId) != nil) {
+				if (Media.pathVideo(message.objectId) != nil) {
 					messages_media.append(message)
 				}
 			}
@@ -71,7 +71,7 @@ class AllMediaView: UIViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func presentPicture(message: Message) {
 
-		if (MediaDownload.pathPhoto(message.objectId) != nil) {
+		if (Media.pathPhoto(message.objectId) != nil) {
 			let pictureView = PictureView(chatId: chatId, messageId: message.objectId)
 			present(pictureView, animated: true)
 		}
@@ -80,9 +80,8 @@ class AllMediaView: UIViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func presentVideo(message: Message) {
 
-		if let path = MediaDownload.pathVideo(message.objectId) {
-			let url = URL(fileURLWithPath: path)
-			let videoView = VideoView(url: url)
+		if let path = Media.pathVideo(message.objectId) {
+			let videoView = VideoView(path: path)
 			present(videoView, animated: true)
 		}
 	}

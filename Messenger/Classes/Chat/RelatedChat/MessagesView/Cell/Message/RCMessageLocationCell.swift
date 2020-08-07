@@ -38,12 +38,12 @@ class RCMessageLocationCell: RCMessageCell {
 			viewBubble.addSubview(activityIndicator)
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_LOADING) {
+		if (rcmessage.mediaStatus == MediaStatus.Loading) {
 			imageViewThumb.image = nil
 			activityIndicator.startAnimating()
 		}
 
-		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
+		if (rcmessage.mediaStatus == MediaStatus.Succeed) {
 			imageViewThumb.image = rcmessage.locationThumbnail
 			activityIndicator.stopAnimating()
 		}

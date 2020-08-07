@@ -38,9 +38,9 @@ class CacheView: UIViewController {
 
 		let keepMedia = Persons.keepMedia()
 
-		if (keepMedia == KEEPMEDIA_WEEK)	{ cellKeepMedia.detailTextLabel?.text = "1 week"	}
-		if (keepMedia == KEEPMEDIA_MONTH)	{ cellKeepMedia.detailTextLabel?.text = "1 month"	}
-		if (keepMedia == KEEPMEDIA_FOREVER)	{ cellKeepMedia.detailTextLabel?.text = "Forever"	}
+		if (keepMedia == KeepMedia.Week)	{ cellKeepMedia.detailTextLabel?.text = "1 week"	}
+		if (keepMedia == KeepMedia.Month)	{ cellKeepMedia.detailTextLabel?.text = "1 month"	}
+		if (keepMedia == KeepMedia.Forever)	{ cellKeepMedia.detailTextLabel?.text = "Forever"	}
 	}
 
 	// MARK: - User actions
@@ -54,7 +54,7 @@ class CacheView: UIViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func actionClearCache() {
 
-		MediaManager.cleanupManual(logout: false)
+		Media.cleanupManual(logout: false)
 		updateDetails()
 	}
 
@@ -62,7 +62,7 @@ class CacheView: UIViewController {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func updateDetails() {
 
-		let total = MediaManager.total()
+		let total = Media.total()
 
 		if (Int(total) < 1000 * 1024) {
 			cellCacheSize.textLabel?.text = "Cache size: \(Int(total) / 1024) Kbytes"

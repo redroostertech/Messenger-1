@@ -15,10 +15,11 @@ import Foundation
 extension NSError {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func description(_ description: String, code: Int) -> Error? {
+	convenience init(_ description: String, _ code: Int) {
 
 		let domain = Bundle.main.bundleIdentifier ?? ""
 		let userInfo = [NSLocalizedDescriptionKey: description]
-		return NSError(domain: domain, code: code, userInfo: userInfo)
+
+		self.init(domain: domain, code: code, userInfo: userInfo)
 	}
 }
